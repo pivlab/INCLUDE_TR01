@@ -1,0 +1,83 @@
+---
+title: "01_PLIER_GTEx"
+output: html_document
+date: "2024-02-08"
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.algn = "center",
+                      warning = FALSE,
+                      message = FALSE)
+
+# List of CRAN/Bioconductor packages to check and potentially install
+packages <- c("RColorBrewer", "gplots", "pheatmap", "glmnet", "rsvd", "qvalue", "devtools", 'here')
+
+# Install BiocManager if not already installed for Bioconductor packages
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# Function to check and install missing packages using BiocManager::install for Bioconductor packages
+# and install.packages for CRAN packages
+check_and_install_packages <- function(packages) {
+  for (pkg in packages) {
+    if (!require(pkg, character.only = TRUE)) {
+      if (pkg %in% c("qvalue")) { # Add more Bioconductor packages to this vector if needed
+        BiocManager::install(pkg)
+      } else {
+        install.packages(pkg)
+      }
+      library(pkg, character.only = TRUE)
+    }
+  }
+}
+
+# Call the function with the list of packages
+check_and_install_packages(packages)
+
+# Now install PLIER from GitHub
+if (!require("PLIER", character.only = TRUE)) {
+  devtools::install_github("wgmao/PLIER")
+  library(PLIER, character.only = TRUE)
+}
+
+```
+
+
+```{r}
+# laod exprs data
+exprs_path=here::here('data/NARES_SCANfast_ComBat_with_GeneSymbol.pcl')
+
+exprs.mat <- readr::read_tsv(exprs_path,
+                              progress = FALSE)
+
+# set matrix rownames
+exprs.mat=as.data.frame(exprs.mat)
+rownames(exprs.mat) <- exprs.mat$GeneSymbol
+exprs.mat <- as.matrix(dplyr::select(exprs.mat, -GeneSymbol))
+
+
+# load PLIER pathway and cell type data
+data(bloodCellMarkersIRISDMAP)
+data(svmMarkers)
+data(canonicalPathways)
+
+# combine the pathway data from PLIER
+all.paths <- PLIER::combinePaths(bloodCellMarkersIRISDMAP, svmMarkers, 
+                                 canonicalPathways)
+
+# what genes are common to the pathway data and the expression matrix
+cm.genes <- PLIER::commonRows(all.paths, exprs.mat)
+
+# row normalize
+exprs.norm <- PLIER::rowNorm(exprs.mat)
+
+# what should we set the minimum k parameter to in PLIER? estimate the number 
+# of PC for the SVD decomposition 
+set.k <- PLIER::num.pc(exprs.norm[cm.genes, ])
+
+# PLIER main function + return results
+plier.res <- PLIER::PLIER(exprs.norm[cm.genes, ], all.paths[cm.genes, ], trace = TRUE)
+```
+
