@@ -14,3 +14,11 @@ $ conda install -n base -c conda-forge mamba
 $ mamba create -c conda-forge -c bioconda -n snakemake snakemake
 ```
 
+## 
+
+Workflow can be executed by:
+
+``` bash
+snakemake --use-conda --snakefile plier_recount3.smk -j 1
+```
+
