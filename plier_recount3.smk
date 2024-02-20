@@ -33,8 +33,22 @@ rule All:
     input:
         # Download data
         f'{config.data}/gtex/GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct',
+        # Install dependencies
+        f'{config.logs}/PLIER_installed.txt',
         # Process files
         f'{config.output}/gtex/GTEx_v8_gene_median_feather'
+
+
+# INSTALL DEPENDENCIES
+rule install_PLIER:
+    output:
+        f'{config.logs}/PLIER_installed.txt'
+    conda:
+        'envs/gtex.yaml'
+    shell:
+        """
+        R -e "devtools::install_github('wgmao/PLIER')" && touch {output}
+        """
 
 rule download_gtex_data:
     """

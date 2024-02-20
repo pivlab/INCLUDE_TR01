@@ -13,8 +13,8 @@ dependencies:
   - r-rsvd
   - bioconductor-qvalue
   - r-here
-  - bioconductor-plier
   - r-readr
   - r-dplyr
   - r-arrow
+  - bioconductor-biomart
 
