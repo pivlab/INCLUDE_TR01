@@ -36,7 +36,8 @@ rule All:
         # Install dependencies
         f'{config.logs}/PLIER_installed.txt',
         # Process files
-        f'{config.output}/gtex/GTEx_v8_gene_median_feather'
+        f'{config.output}/gtex/GTEx_v8_gene_median_feather',
+        f'{config.output}/gtex/gtex_plier.rds'
 
 
 # INSTALL DEPENDENCIES
@@ -77,4 +78,20 @@ rule process_gtex_data:
     shell:
         """
         Rscript {input.script} {input.gtex_data} {output.gtex_data_p}
+        """
+
+rule plier_gtex:
+    """
+    Create GTEx v8 matrix and run PLIER analysis
+    """
+    input:
+        script = "scripts/plier_gtex.R",
+        gtex_data_p = f'{rules.process_gtex_data.output.gtex_data_p}'
+    output:
+        gtex_plier = f'{config.output}/gtex/gtex_plier.rds', 
+    conda:
+        'envs/gtex.yaml',
+    shell:
+        """
+        Rscript {input.script} {input.gtex_data_p} {output.gtex_plier}
         """

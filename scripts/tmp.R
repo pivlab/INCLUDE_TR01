@@ -80,3 +80,41 @@ exprs_norm <- PLIER::rowNorm(exprs_mat)
 set.k <- PLIER::num.pc(exprs.norm[cm.genes, ])
 # PLIER main function + return results
 plier.res <- PLIER::PLIER(exprs.norm[cm.genes, ], all.paths[cm.genes, ], trace = TRUE)
+
+
+
+####
+
+#data stands for the RNA-seq matrix and priorMat stands for the pathway matrix
+#Before everything starts, make sure there is no NA values in the data
+sum(is.na(exprs_mat_norm_na))==0 
+
+cm=intersect(rownames(data), rownames(priorMat)) 
+data=data[cm,]
+priorMat=priorMat[cm,]
+
+
+#filter our pathways with too few genes
+priorMat = priorMat[,which(apply(priorMat,2,sum)>=10)]
+cm = which(apply(priorMat,1,sum)>0)
+data = data[cm,]
+priorMat = priorMat[cm,]
+
+#Before applying scaling and svd, make sure there is no 0-variance row
+cm=which(apply(exprs_mat_norm_na,1,sd)>0)
+data = data[cm,]
+priorMat = priorMat[cm,]
+
+
+#start rsvd/svd steps
+set.seed(123456)
+ns=ncol(data)
+data = tscale(data)
+
+#make sure there is no NA values after applying tscale
+sum(is.na(data))==0
+svdres=rsvd(data, k=min(ns, max(200, ns/4)), q=3) #You can also try svdres=svd(data)
+
+
+#if there is no problem getting svdres, then set PLIER to run
+PLIER.res <- PLIER(data = data, priorMat = priorMat, svdres = svdres, scale = F)
