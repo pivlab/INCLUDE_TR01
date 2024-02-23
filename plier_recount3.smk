@@ -36,12 +36,15 @@ rule All:
         # Install dependencies
         f'{config.logs}/PLIER_installed.txt',
         # Process files
-        f'{config.output}/gtex/GTEx_v8_gene_median_feather',
+        f'{config.output}/gtex/GTEx_v8_gene_median_tpm.rds',
         f'{config.output}/gtex/gtex_plier.rds'
 
 
 # INSTALL DEPENDENCIES
 rule install_PLIER:
+    """
+    Download and install PLIER inside the conda env
+    """
     output:
         f'{config.logs}/PLIER_installed.txt'
     conda:
@@ -51,6 +54,7 @@ rule install_PLIER:
         R -e "devtools::install_github('wgmao/PLIER')" && touch {output}
         """
 
+# DOWNLOAD DBs
 rule download_gtex_data:
     """
     Download GTEx v8 expression data
@@ -64,15 +68,16 @@ rule download_gtex_data:
         {input.script} {config.gtex_link} {output.gtex_data}
         """
 
+# PROCESS AND ANALIZE DATA
 rule process_gtex_data:
     """
-    Read GTEx v8 data and save the entire gene expression data
+    Processes GTEx gene expression TSV file, renames columns, and saves it in RDS format
     """
     input:
         script = "scripts/process_gtex_data.R",
         gtex_data = f'{rules.download_gtex_data.output.gtex_data}'
     output:
-        gtex_data_p = f'{config.output}/gtex/GTEx_v8_gene_median_feather', 
+        gtex_data_p = f'{config.output}/gtex/GTEx_v8_gene_median_tpm.rds', 
     conda:
         'envs/gtex.yaml',
     shell:
@@ -80,9 +85,10 @@ rule process_gtex_data:
         Rscript {input.script} {input.gtex_data} {output.gtex_data_p}
         """
 
+
 rule plier_gtex:
     """
-    Create GTEx v8 matrix and run PLIER analysis
+    Processes GTEx gene expression data using PLIER for pathway analysis, including data Z-score normalization
     """
     input:
         script = "scripts/plier_gtex.R",

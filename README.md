@@ -1,26 +1,13 @@
-# plier_recount3
+# PLIER recount3
 
 ## Dependencies
 
-* `conda` - for a minimal install of conda, check out [miniconda](https://docs.conda.io/en/latest/miniconda.html)	
-	
-* `mamba` - [drop in replacement](https://github.com/mamba-org/mamba) for conda's package manager.  Used to install `snakemake`
+*  `miniforge` - check out [miniforge](https://github.com/conda-forge/miniforge). This repository holds the minimal installers for Conda and Mamba specific to conda-forge. Distribution >= Miniforge3-22.3.1-0.
+
+* `snakemake and other requirments` 
 
 ``` bash
-conda install -n base -c conda-forge mamba
-```
-
-* `snakemake` 
-
-``` bash
-mamba create -c conda-forge -c bioconda -n snakemake snakemake
-```
-
-Install python requirments
-
-``` bash
-conda activate snakemake
-pip install -r requirements.txt
+mamba env create -f environment.yml
 ```
 
 ## Run analyses
@@ -28,7 +15,7 @@ pip install -r requirements.txt
 Activate the conda environment
 
 ``` bash
-conda activate snakemake
+mamba activate snakemake
 ```
 
 Workflow can be executed by:
@@ -39,3 +26,8 @@ Workflow can be executed by:
 snakemake --use-conda --snakefile plier_recount3.smk -j 1
 ```
 
+## Datasets
+
+### [GTEx](https://gtexportal.org/home/)
+
+Within this repository, we obtain The GTEx Analysis V8 Gene TPMs data through the [`GTEx` Portal](https://gtexportal.org/home/), further process it, and apply [`PLIER`](https://github.com/wgmao/PLIER).
