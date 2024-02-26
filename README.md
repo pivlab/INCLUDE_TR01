@@ -30,4 +30,4 @@ snakemake --use-conda --snakefile plier_recount3.smk -j 1
 
 ### [GTEx](https://gtexportal.org/home/)
 
-Within this repository, we obtain The GTEx Analysis V8 Gene TPMs data through the [`GTEx` Portal](https://gtexportal.org/home/), further process it, and apply [`PLIER`](https://github.com/wgmao/PLIER).
+Within this repository, we obtain the GTEx Analysis V8 Gene TPMs data through the [`GTEx` Portal](https://gtexportal.org/home/), further process it, and apply [`PLIER`](https://github.com/wgmao/PLIER).
