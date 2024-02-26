@@ -4,7 +4,7 @@
 
 *  `miniforge` - check out [miniforge](https://github.com/conda-forge/miniforge). This repository holds the minimal installers for Conda and Mamba specific to conda-forge. Distribution >= Miniforge3-22.3.1-0.
 
-* `snakemake and other requirments` 
+* `snakemake` and other requirements
 
 ``` bash
 mamba env create -f environment.yml
