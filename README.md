@@ -1,4 +1,4 @@
-# PLIER recount3
+# PLIER models based on recount3
 
 ## Dependencies
 
