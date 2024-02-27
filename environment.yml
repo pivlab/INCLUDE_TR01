@@ -1,0 +1,10 @@
+name: snakemake
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - pandas=2.2.0
+  - snakemake=8.4.11
+  - pip:
+      - utils==1.0.2
