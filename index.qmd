@@ -6,7 +6,7 @@ Welcome to the PLIER models based on recount3 website, where you can find detail
 
 PLIER is a matrix factorization approach that decomposes gene expression data into a product of a small number of LVs and their corresponding gene associations or loadings, while constraining the loadings to align with the most relevant automatically selected subset of prior knowledge. 
 
-![PLIER overview](plier_overview.webp)
+![PLIER overview](images/plier_overview.png)
 
 List of analysis:
 
