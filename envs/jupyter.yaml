@@ -1,4 +1,4 @@
-name: gtex
+name: jupyter
 channels:
   - conda-forge
   - bioconda
@@ -6,19 +6,12 @@ dependencies:
   - conda-forge::r-biocmanager
   - r-base==4.3.*
   - r-devtools==2.*  
-  - r-pheatmap
-  - r-RColorBrewer
-  - r-gplots
-  - r-glmnet
-  - r-rsvd
-  - bioconductor-qvalue
-  - r-here
-  - r-dplyr
-  - bioconductor-biomart
   - jupyterlab
   - rpy2
+  - papermill=2.3.*
   - pandas
+  - python=3.11.*
   - r-ggplot2
   - r-irkernel
-  - r-assertthat
-
+  - r-here
+  - r-dplyr

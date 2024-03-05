@@ -101,3 +101,20 @@ rule plier_gtex:
         """
         Rscript {input.script} {input.gtex_data_p} {output.gtex_plier}
         """
+
+rule analyze_plier_gtex:
+    """
+    """
+    input:
+        script = "scripts/render_nbs.sh",
+        input_nb = "nbs/10_gtex/GTEx_PLIER_exploration.ipynb"
+        gtex_plier = f'{config.output}/gtex/gtex_plier.rds', 
+    output:
+        _ = "", 
+    conda:
+        'envs/jupyter.yaml',
+    shell:
+        """
+        {input.script} -p INPUT_PLIER_MODEL_FILE {output.plier_gtex.gtex_plier}
+        """
+        

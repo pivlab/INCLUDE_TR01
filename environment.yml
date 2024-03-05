@@ -4,7 +4,8 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - pandas=2.2.0
-  - snakemake=8.4.11
+  - pandas=2.2.*
+  - snakemake=8.4.*
+  - python=3.12.*
   - pip:
-      - utils==1.0.2
+      - utils==1.0.*

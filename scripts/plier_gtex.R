@@ -53,8 +53,11 @@ gtex_expression_matrix <- PLIER::rowNorm(gtex_expression_matrix)
 # Combine the pathway data from PLIER
 all_paths <- PLIER::combinePaths(bloodCellMarkersIRISDMAP, svmMarkers, canonicalPathways)
 
-# Run PLIER
-plier_result <- PLIER(gtex_expression_matrix, all_paths, allGenes = FALSE)
+# What genes are common to the pathway data and the expression matrix
+cm_genes <- PLIER::commonRows(all_paths, gtex_expression_matrix)
+
+# Run PLIER (with common genes)
+plier_result <- PLIER(gtex_expression_matrix[cm_genes, ], all_paths[cm_genes, ])
 
 # Save results
 saveRDS(plier_result, file = output_file_path)
