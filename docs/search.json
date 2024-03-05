@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "nbs/10_gtex/GTEx_PLIER_exploration.html",
+    "href": "nbs/10_gtex/GTEx_PLIER_exploration.html",
+    "title": "GTEX PLIER exploratory analyses",
+    "section": "",
+    "text": "TODO add description\n\n\n\nINPUT_PLIER_MODEL_FILE = NULL \n\n\n# Parameters\nINPUT_PLIER_MODEL_FILE = \"output/gtex/gtex_plier.rds\"\n\n\nlibrary(assertthat)\nassert_that(!is.null(INPUT_PLIER_MODEL_FILE), msg = \"Input PLIER model was not specified\")\n\n\n\n\n\nlibrary(PLIER)\nlibrary(ggplot2)\nlibrary(assertthat)\n\n\n\n\n\n\n\nnum_lvs &lt;- nrow(gtex_plier_results$B)\nnum_lvs\n\n1042\n\n\n\nnum_lvs\n\n1042"
+  },
+  {
+    "objectID": "nbs/10_gtex/GTEx_PLIER_exploration.html#settings-and-paths",
+    "href": "nbs/10_gtex/GTEx_PLIER_exploration.html#settings-and-paths",
+    "title": "GTEX PLIER exploratory analyses",
+    "section": "",
+    "text": "INPUT_PLIER_MODEL_FILE = NULL \n\n\n# Parameters\nINPUT_PLIER_MODEL_FILE = \"output/gtex/gtex_plier.rds\"\n\n\nlibrary(assertthat)\nassert_that(!is.null(INPUT_PLIER_MODEL_FILE), msg = \"Input PLIER model was not specified\")"
+  },
+  {
+    "objectID": "nbs/10_gtex/GTEx_PLIER_exploration.html#load-libraries-and-data",
+    "href": "nbs/10_gtex/GTEx_PLIER_exploration.html#load-libraries-and-data",
+    "title": "GTEX PLIER exploratory analyses",
+    "section": "",
+    "text": "library(PLIER)\nlibrary(ggplot2)\nlibrary(assertthat)"
+  },
+  {
+    "objectID": "nbs/10_gtex/GTEx_PLIER_exploration.html#u-matrix",
+    "href": "nbs/10_gtex/GTEx_PLIER_exploration.html#u-matrix",
+    "title": "GTEX PLIER exploratory analyses",
+    "section": "",
+    "text": "num_lvs &lt;- nrow(gtex_plier_results$B)\nnum_lvs\n\n1042\n\n\n\nnum_lvs\n\n1042"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "prove_website",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\nanalysis"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  }
+]
