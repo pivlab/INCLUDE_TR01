@@ -1,9 +1,13 @@
 ---
-title: "prove_website"
+title: "PLIER models based on recount3"
 ---
 
-This is a Quarto website.
+Welcome to the PLIER models based on recount3 website, where you can find detailed analyses and results from applying PLIER models to recount3 data.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+PLIER is a matrix factorization approach that decomposes gene expression data into a product of a small number of LVs and their corresponding gene associations or loadings, while constraining the loadings to align with the most relevant automatically selected subset of prior knowledge. 
 
-[analysis](GTEx_PLIER_exploration.html)
+![PLIER overview](plier_overview.webp)
+
+List of analysis:
+
+[GTEx analysis](GTEx_PLIER_exploration.html)
