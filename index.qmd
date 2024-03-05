@@ -10,4 +10,4 @@ PLIER is a matrix factorization approach that decomposes gene expression data in
 
 List of analysis:
 
-[GTEx analysis](GTEx_PLIER_exploration.html)
+[GTEx analysis](docs/nbs/10_gtex/GTEx_PLIER_exploration.html)
