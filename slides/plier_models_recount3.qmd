@@ -1,7 +1,8 @@
 ---
 title: "PLIER MODELS BASED ON RECOUNT3"
-author: "Marc Subirana-Granés"
-format: revealjs
+format:
+  revealjs:
+    embed-resources: true
 ---
 
 # Hypthesis
