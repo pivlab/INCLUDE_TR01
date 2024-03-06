@@ -4,28 +4,35 @@
     "href": "nbs/10_gtex/GTEx_PLIER_exploration.html",
     "title": "GTEX PLIER exploratory analyses",
     "section": "",
-    "text": "TODO add description\n\n\n\nINPUT_PLIER_MODEL_FILE = NULL \n\n\n# Parameters\nINPUT_PLIER_MODEL_FILE = \"output/gtex/gtex_plier.rds\"\n\n\nlibrary(assertthat)\nassert_that(!is.null(INPUT_PLIER_MODEL_FILE), msg = \"Input PLIER model was not specified\")\n\n\n\n\n\nlibrary(PLIER)\nlibrary(ggplot2)\nlibrary(assertthat)\n\n\n\n\n\n\n\nnum_lvs &lt;- nrow(gtex_plier_results$B)\nnum_lvs\n\n1042\n\n\n\nnum_lvs\n\n1042"
+    "text": "Marc Subirana-Granés (2024)\nPathway Level Information ExtractoR (PLIER) (Mao, et al. bioRxiv. 2017.) is a framework that explicitly aligns latent variables (LVs) with prior knowledge in the form of (often curated) gene sets. Comparisons of PLIER to other methods (e.g., sparse PCA) and other evaluations can be found in the PLIER preprint.\nWe’re going to explore the recount2 dataset and the corresponding PLIER model. (See greenelab/rheum-plier-data for the processing code.) We’re interested in coming up with ways to characterize PLIER models (and eventually compare them)\n\n\n\nINPUT_PLIER_MODEL_FILE = NULL \n\n\n\n\n\nlibrary(PLIER)\nlibrary(ggplot2)\nlibrary(assertthat)\n\nINPUT_PLIER_MODEL_FILE='output/gtex/gtex_plier.rds'\n\n\nassert_that(!is.null(INPUT_PLIER_MODEL_FILE), msg = \"Input PLIER model was not specified\")\n\nTRUE\n\n\n\n\n\n\n\n\ngtex_plier_results=readRDS(here::here(INPUT_PLIER_MODEL_FILE))\nnum_lvs &lt;- nrow(gtex_plier_results$B)\nnum_lvs\n\n1042\n\n\n\nnum_lvs\n\n1042\n\n\n\nhead(gtex_plier_results$U)\n\n\n\nA matrix: 6 × 1042 of type dbl\n\n\n\nLV1\nLV2\nLV3\nLV4\nLV5\nLV6\nLV7\nLV8\nLV9\nLV10\n⋯\nLV1033\nLV1034\nLV1035\nLV1036\nLV1037\nLV1038\nLV1039\nLV1040\nLV1041\nLV1042\n\n\n\n\nIRIS_Bcell-Memory_IgG_IgA\n0\n0\n0\n0.0000000\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nIRIS_Bcell-Memory_IgM\n0\n0\n0\n0.0000000\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nIRIS_Bcell-naive\n0\n0\n0\n0.0000000\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nIRIS_CD4Tcell-N0\n0\n0\n0\n0.0000000\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nIRIS_CD4Tcell-Th1-restimulated12hour\n0\n0\n0\n0.0000000\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nIRIS_CD4Tcell-Th1-restimulated48hour\n0\n0\n0\n0.1697034\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0"
   },
   {
     "objectID": "nbs/10_gtex/GTEx_PLIER_exploration.html#settings-and-paths",
     "href": "nbs/10_gtex/GTEx_PLIER_exploration.html#settings-and-paths",
     "title": "GTEX PLIER exploratory analyses",
     "section": "",
-    "text": "INPUT_PLIER_MODEL_FILE = NULL \n\n\n# Parameters\nINPUT_PLIER_MODEL_FILE = \"output/gtex/gtex_plier.rds\"\n\n\nlibrary(assertthat)\nassert_that(!is.null(INPUT_PLIER_MODEL_FILE), msg = \"Input PLIER model was not specified\")"
+    "text": "INPUT_PLIER_MODEL_FILE = NULL"
   },
   {
     "objectID": "nbs/10_gtex/GTEx_PLIER_exploration.html#load-libraries-and-data",
     "href": "nbs/10_gtex/GTEx_PLIER_exploration.html#load-libraries-and-data",
     "title": "GTEX PLIER exploratory analyses",
     "section": "",
-    "text": "library(PLIER)\nlibrary(ggplot2)\nlibrary(assertthat)"
+    "text": "library(PLIER)\nlibrary(ggplot2)\nlibrary(assertthat)\n\nINPUT_PLIER_MODEL_FILE='output/gtex/gtex_plier.rds'\n\n\nassert_that(!is.null(INPUT_PLIER_MODEL_FILE), msg = \"Input PLIER model was not specified\")\n\nTRUE"
   },
   {
     "objectID": "nbs/10_gtex/GTEx_PLIER_exploration.html#u-matrix",
     "href": "nbs/10_gtex/GTEx_PLIER_exploration.html#u-matrix",
     "title": "GTEX PLIER exploratory analyses",
     "section": "",
-    "text": "num_lvs &lt;- nrow(gtex_plier_results$B)\nnum_lvs\n\n1042\n\n\n\nnum_lvs\n\n1042"
+    "text": "gtex_plier_results=readRDS(here::here(INPUT_PLIER_MODEL_FILE))\nnum_lvs &lt;- nrow(gtex_plier_results$B)\nnum_lvs\n\n1042\n\n\n\nnum_lvs\n\n1042\n\n\n\nhead(gtex_plier_results$U)\n\n\n\nA matrix: 6 × 1042 of type dbl\n\n\n\nLV1\nLV2\nLV3\nLV4\nLV5\nLV6\nLV7\nLV8\nLV9\nLV10\n⋯\nLV1033\nLV1034\nLV1035\nLV1036\nLV1037\nLV1038\nLV1039\nLV1040\nLV1041\nLV1042\n\n\n\n\nIRIS_Bcell-Memory_IgG_IgA\n0\n0\n0\n0.0000000\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nIRIS_Bcell-Memory_IgM\n0\n0\n0\n0.0000000\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nIRIS_Bcell-naive\n0\n0\n0\n0.0000000\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nIRIS_CD4Tcell-N0\n0\n0\n0\n0.0000000\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nIRIS_CD4Tcell-Th1-restimulated12hour\n0\n0\n0\n0.0000000\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nIRIS_CD4Tcell-Th1-restimulated48hour\n0\n0\n0\n0.1697034\n0\n0\n0\n0\n0\n0\n⋯\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
   },
   {
     "objectID": "index.html",
@@ -35,10 +42,10 @@
     "text": "Welcome to the PLIER models based on recount3 website, where you can find detailed analyses and results from applying PLIER models to recount3 data.\nPLIER is a matrix factorization approach that decomposes gene expression data into a product of a small number of LVs and their corresponding gene associations or loadings, while constraining the loadings to align with the most relevant automatically selected subset of prior knowledge.\n\n\n\nPLIER overview\n\n\nList of analysis:\nGTEx analysis"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
+    "objectID": "slides/plier_models_recount3.html#prove-python",
+    "href": "slides/plier_models_recount3.html#prove-python",
+    "title": "PLIER MODELS BASED ON RECOUNT3",
+    "section": "Prove python",
+    "text": "Prove python\n\n\n\n\n\n\n\n\nFigure 1: A line plot on a polar axis"
   }
 ]

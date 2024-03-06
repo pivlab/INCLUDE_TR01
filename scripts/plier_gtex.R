@@ -23,8 +23,6 @@ data(bloodCellMarkersIRISDMAP)
 data(svmMarkers)
 data(canonicalPathways)
 
-gtex_expression_path='output/gtex/GTEx_v8_gene_median_tpm.rds'
-
 # Load GTEx data
 gtex_expression_data <- readRDS(gtex_expression_path)
 

@@ -4,6 +4,7 @@ channels:
   - bioconda
 dependencies:
   - conda-forge::r-biocmanager
+  - python=3.11.*
   - r-base==4.3.*
   - r-devtools==2.*  
   - r-pheatmap
@@ -21,4 +22,10 @@ dependencies:
   - r-ggplot2
   - r-irkernel
   - r-assertthat
-
+  - r-reshape2
+  - jupyter
+  - numpy
+  - matplotlib
+  - pip:
+      - jupyterlab-quarto
+      

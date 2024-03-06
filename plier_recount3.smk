@@ -37,7 +37,8 @@ rule All:
         f'{config.logs}/PLIER_installed.txt',
         # Process files
         f'{config.output}/gtex/GTEx_v8_gene_median_tpm.rds',
-        f'{config.output}/gtex/gtex_plier.rds'
+        f'{config.output}/gtex/gtex_plier.rds',
+        expand(f'{config.output}/gtex/robustness/gtex_plier_rob_{{replicate}}.rds', replicate=range(1, 11))
 
 
 # INSTALL DEPENDENCIES
@@ -102,19 +103,34 @@ rule plier_gtex:
         Rscript {input.script} {input.gtex_data_p} {output.gtex_plier}
         """
 
-rule analyze_plier_gtex:
+# rule analyze_plier_gtex:
+#     """
+#     """
+#     input:
+#         script = "scripts/render_nbs.sh",
+#         input_nb = "nbs/10_gtex/GTEx_PLIER_exploration.ipynb"
+#         gtex_plier = f'{config.output}/gtex/gtex_plier.rds', 
+#     output:
+#         _ = "", 
+#     conda:
+#         'envs/jupyter.yaml',
+#     shell:
+#         """
+#         {input.script} -p INPUT_PLIER_MODEL_FILE {output.plier_gtex.gtex_plier}
+#         """
+    
+rule plier_gtex_robustness:
     """
+    Processes GTEx gene expression data using PLIER for pathway analysis, including data Z-score normalization 10 times to assay the robustness of the results
     """
     input:
-        script = "scripts/render_nbs.sh",
-        input_nb = "nbs/10_gtex/GTEx_PLIER_exploration.ipynb"
-        gtex_plier = f'{config.output}/gtex/gtex_plier.rds', 
+        script = "scripts/plier_gtex.R",
+        gtex_data_p = f'{rules.process_gtex_data.output.gtex_data_p}'
     output:
-        _ = "", 
+        gtex_plier = f'{config.output}/gtex/robustness/gtex_plier_rob_{{replicate}}.rds'
     conda:
-        'envs/jupyter.yaml',
+        'envs/gtex.yaml'
     shell:
         """
-        {input.script} -p INPUT_PLIER_MODEL_FILE {output.plier_gtex.gtex_plier}
+        Rscript {input.script} {input.gtex_data_p} {output.gtex_plier}
         """
-        
