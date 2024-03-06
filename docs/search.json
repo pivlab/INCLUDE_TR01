@@ -39,7 +39,7 @@
     "href": "index.html",
     "title": "PLIER models based on recount3",
     "section": "",
-    "text": "Welcome to the PLIER models based on recount3 website, where you can find detailed analyses and results from applying PLIER models to recount3 data.\nPLIER is a matrix factorization approach that decomposes gene expression data into a product of a small number of LVs and their corresponding gene associations or loadings, while constraining the loadings to align with the most relevant automatically selected subset of prior knowledge.\n\n\n\nPLIER overview\n\n\nList of analysis:\nGTEx analysis"
+    "text": "Welcome to the PLIER models based on recount3 website, where you can find detailed analyses and results from applying PLIER models to recount3 data.\nPLIER is a matrix factorization approach that decomposes gene expression data into a product of a small number of LVs and their corresponding gene associations or loadings, while constraining the loadings to align with the most relevant automatically selected subset of prior knowledge.\n\n\n\nPLIER overview\n\n\nList of analysis:\nGTEx analysis\nSlides:\nPLIER models based on recount3"
   },
   {
     "objectID": "slides/plier_models_recount3.html#prove-python",
