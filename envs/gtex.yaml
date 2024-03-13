@@ -12,10 +12,15 @@ dependencies:
   - r-gplots
   - r-glmnet
   - r-rsvd
+  - r-upsetr
+  - r-compare
+  - bioconductor-complexheatmap
   - bioconductor-qvalue
   - r-here
   - r-dplyr
   - bioconductor-biomart
+  - r-tidyr
+  - r-UpSetR
   - jupyterlab
   - rpy2
   - pandas
@@ -26,6 +31,13 @@ dependencies:
   - jupyter
   - numpy
   - matplotlib
+  - r-matrixstats
+  - bioconductor-clusterprofiler
+  - bioconductor-org.hs.eg.db
+  - bioconductor-GenomicSuperSignature
+  - r-magrittr
+  - r-corrr
+  - papermill=2.3.*
   - pip:
       - jupyterlab-quarto
       

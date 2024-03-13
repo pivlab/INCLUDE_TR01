@@ -51,3 +51,7 @@ if [ "${override_nbs}" != "0" ]; then
     mv $output_notebook $input_notebook
     # bash ${GIT_ROOT_DIR}/scripts/convert_ipynb_to_py.sh ${input_notebook}
 fi
+
+output_notebook_txt="${output_notebook%.ipynb}.txt"
+
+touch $output_notebook_txt
