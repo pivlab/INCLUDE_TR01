@@ -15,6 +15,7 @@ format:
     theme: lux
     css: styles.css
     toc: true
+    code-fold: true
 
 
 

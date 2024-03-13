@@ -184,11 +184,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Marc Subirana-Granés (2024)</p>
 <p>Compare the various parameters of PLIER GTEx models across different computations to evaluate PLIER’s robustness, utilizing identical parameters for assessment.</p>
 <div id="c602a91b-e2c3-42a0-b03e-2429dc98c579" class="cell" data-editable="true" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:31:41.725572Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:31:41.723172Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:31:41.742604Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:31:41.741671Z&quot;}" data-papermill="{&quot;duration&quot;:0.023904,&quot;end_time&quot;:&quot;2024-03-13T19:31:41.743632&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:31:41.719728&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[&quot;parameters&quot;]" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>INPUT_PLIER_ROB_DIR<span class="ot">=</span><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <section id="load-libraries-and-data" class="level2">
 <h2 class="anchored" data-anchor-id="load-libraries-and-data">Load libraries and data</h2>
 <div id="0a4d5125-a783-4b6b-8de5-0f39fcf289e5" class="cell" data-editable="true" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:31:41.791221Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:31:41.790396Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:31:43.117205Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:31:43.116308Z&quot;}" data-papermill="{&quot;duration&quot;:1.331041,&quot;end_time&quot;:&quot;2024-03-13T19:31:43.118131&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:31:41.787090&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(dplyr)</span>
@@ -284,56 +289,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    heatmap_data <span class="ot">&lt;-</span> heatmap_data[, <span class="fu">c</span>(<span class="fu">ncol</span>(heatmap_data), <span class="dv">1</span><span class="sc">:</span>(<span class="fu">ncol</span>(heatmap_data)<span class="sc">-</span><span class="dv">1</span>))]</span>
 <span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="robustness-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="robustness-analysis">Robustness analysis</h2>
 <p>Extract all the parameters in the PLIER module for each GTEx module and create a list for each parameter and load models into a list object.</p>
 <div id="c05444b8-67eb-4ab4-a8ae-2cf90730034c" class="cell" data-editable="true" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:31:43.143096Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:31:43.141885Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:32:42.921250Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:32:42.920280Z&quot;}" data-papermill="{&quot;duration&quot;:59.783688,&quot;end_time&quot;:&quot;2024-03-13T19:32:42.922274&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:31:43.138586&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gtex_rob_model_paths<span class="ot">=</span><span class="fu">list.files</span>(INPUT_PLIER_ROB_DIR,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">pattern=</span><span class="st">"</span><span class="sc">\\</span><span class="st">.rds"</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">full.names=</span><span class="cn">TRUE</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>gtex_rob_model_paths<span class="ot">=</span>gtex_rob_model_paths[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>parameters_to_keep <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"L1"</span>, <span class="st">"L2"</span>, <span class="st">"L3"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"heldOutGen"</span>, <span class="st">"residual"</span>, <span class="st">"summary"</span>, <span class="st">"U"</span>, <span class="st">"Uauc"</span>, <span class="st">"Z"</span>, <span class="st">"Up"</span>, <span class="st">"withPrior"</span>)</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>parameters_to_keep <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"L1"</span>, <span class="st">"L2"</span>, <span class="st">"L3"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"heldOutGen"</span>, <span class="st">"residual"</span>, <span class="st">"summary"</span>, <span class="st">"U"</span>, <span class="st">"Uauc"</span>, <span class="st">"Z"</span>, <span class="st">"Up"</span>, <span class="st">"withPrior"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a list to store the extracted values for each parameter, considering their data types</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>extracted_values <span class="ot">&lt;-</span> <span class="fu">setNames</span>(<span class="fu">lapply</span>(parameters_to_keep, <span class="cf">function</span>(x) <span class="fu">list</span>()), parameters_to_keep)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to handle different types of data structures</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>handle_data_type <span class="ot">&lt;-</span> <span class="cf">function</span>(data, param) {</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Depending on the specific requirements or handling you need for each type, adjust here</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(data[[param]])</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Read each file once and extract all specified parameters, handling them based on their type</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>all_models_data <span class="ot">&lt;-</span> <span class="fu">lapply</span>(gtex_rob_model_paths, <span class="cf">function</span>(file_path) {</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  plier_model <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(file_path)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract and handle each needed parameter for this model</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  needed_params <span class="ot">&lt;-</span> <span class="fu">sapply</span>(parameters_to_keep, <span class="cf">function</span>(param) <span class="fu">handle_data_type</span>(plier_model, param), <span class="at">simplify =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(needed_params) <span class="ot">&lt;-</span> parameters_to_keep</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(needed_params)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Organize the extracted data by parameter</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(param <span class="cf">in</span> parameters_to_keep) {</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  extracted_values[[param]] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(all_models_data, <span class="cf">function</span>(model_data) model_data[[param]])</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                                      </span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>gtex_rob_model_paths<span class="ot">=</span><span class="fu">list.files</span>(INPUT_PLIER_ROB_DIR,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">pattern=</span><span class="st">"</span><span class="sc">\\</span><span class="st">.rds"</span>,</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">full.names=</span><span class="cn">TRUE</span>)</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                                    </span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co"># All models into a list</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>gtex_rob_models<span class="ot">=</span><span class="fu">lapply</span>(gtex_rob_model_paths, readRDS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a list to store the extracted values for each parameter, considering their data types</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>extracted_values <span class="ot">&lt;-</span> <span class="fu">setNames</span>(<span class="fu">lapply</span>(parameters_to_keep, <span class="cf">function</span>(x) <span class="fu">list</span>()), parameters_to_keep)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to handle different types of data structures</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>handle_data_type <span class="ot">&lt;-</span> <span class="cf">function</span>(data, param) {</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Depending on the specific requirements or handling you need for each type, adjust here</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(data[[param]])</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Read each file once and extract all specified parameters, handling them based on their type</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>all_models_data <span class="ot">&lt;-</span> <span class="fu">lapply</span>(gtex_rob_model_paths, <span class="cf">function</span>(file_path) {</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  plier_model <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(file_path)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract and handle each needed parameter for this model</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  needed_params <span class="ot">&lt;-</span> <span class="fu">sapply</span>(parameters_to_keep, <span class="cf">function</span>(param) <span class="fu">handle_data_type</span>(plier_model, param), <span class="at">simplify =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(needed_params) <span class="ot">&lt;-</span> parameters_to_keep</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(needed_params)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Organize the extracted data by parameter</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(param <span class="cf">in</span> parameters_to_keep) {</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  extracted_values[[param]] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(all_models_data, <span class="cf">function</span>(model_data) model_data[[param]])</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                                      </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>gtex_rob_model_paths<span class="ot">=</span><span class="fu">list.files</span>(INPUT_PLIER_ROB_DIR,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">pattern=</span><span class="st">"</span><span class="sc">\\</span><span class="st">.rds"</span>,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">full.names=</span><span class="cn">TRUE</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                                    </span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co"># All models into a list</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>gtex_rob_models<span class="ot">=</span><span class="fu">lapply</span>(gtex_rob_model_paths, readRDS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p><strong>Are the L1, L2 and L3 parameters identical along the different GTEx models run?</strong></p>
 <p><strong>L1</strong></p>
 <div id="b9ae188d-ae86-438c-b7f9-4b652a73028e" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:32:42.957555Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:32:42.956906Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:32:42.966934Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:32:42.966175Z&quot;}" data-papermill="{&quot;duration&quot;:0.017241,&quot;end_time&quot;:&quot;2024-03-13T19:32:42.967797&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:32:42.950556&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>extracted_values<span class="sc">$</span>L1</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">check_all_equal_in_list</span>(extracted_values<span class="sc">$</span>L1)                          </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <ol>
     <li>27.7699846221656</li>
@@ -347,8 +357,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>L2</strong></p>
 <div id="f3669b77-92d3-411f-b405-11aadee4426b" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:32:42.983393Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:32:42.982801Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:32:42.993953Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:32:42.993218Z&quot;}" data-papermill="{&quot;duration&quot;:0.016556,&quot;end_time&quot;:&quot;2024-03-13T19:32:42.994897&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:32:42.978341&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>extracted_values<span class="sc">$</span>L2</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">check_all_equal_in_list</span>(extracted_values<span class="sc">$</span>L2)                          </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <ol>
     <li>55.5399692443312</li>
@@ -362,8 +375,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>L3</strong></p>
 <div id="4d4b9d2c-e9cb-444a-932f-31dba6863ed1" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:32:43.010809Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:32:43.010139Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:32:43.018570Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:32:43.017872Z&quot;}" data-papermill="{&quot;duration&quot;:0.013898,&quot;end_time&quot;:&quot;2024-03-13T19:32:43.019388&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:32:43.005490&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>extracted_values<span class="sc">$</span>L3</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">check_all_equal_in_list</span>(extracted_values<span class="sc">$</span>L3)                          </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <ol>
     <li>0.00103329763864764</li>
@@ -377,6 +393,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>Are the top pathways (FDR &lt; 0.01, AUC &gt; 0.95) present in all the models?</strong></p>
 <div id="7d4bb6f8-6aaf-403c-8663-5e9cae5cc7eb" class="cell" data-editable="true" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:32:43.030869Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:32:43.030184Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:32:43.481873Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:32:43.481142Z&quot;}" data-papermill="{&quot;duration&quot;:0.457563,&quot;end_time&quot;:&quot;2024-03-13T19:32:43.484506&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:32:43.026943&quot;,&quot;status&quot;:&quot;completed&quot;}" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width =</span> <span class="dv">40</span>, <span class="at">repr.plot.height =</span> <span class="dv">20</span>, <span class="at">repr.plot.res =</span> <span class="dv">100</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>filtered_summaries <span class="ot">&lt;-</span> <span class="fu">lapply</span>(extracted_values<span class="sc">$</span>summary, <span class="cf">function</span>(df) {</span>
@@ -413,6 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),  </span>
 <span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>)  </span>
 <span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -423,6 +442,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>How are the correlations of Z matrix along the different models?</strong></p>
 <div id="565b8396-12f6-4fb3-a41b-adbd61155045" class="cell" data-editable="true" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:32:43.510622Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:32:43.509815Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:33:28.649550Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:33:28.648605Z&quot;}" data-papermill="{&quot;duration&quot;:45.145901,&quot;end_time&quot;:&quot;2024-03-13T19:33:28.650428&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:32:43.504527&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load all the RDS files, extract the head of the Z element, and save into a named list</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>matrixZ_M_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">seq_along</span>(gtex_rob_model_paths), <span class="cf">function</span>(i) {</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Load the RDS file</span></span>
@@ -451,15 +472,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return the modified data frame</span></span>
 <span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df)</span>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Do the present the same number of LVs and genes?</p>
 <div id="48826788-94a6-40ea-9d25-7fb6dde7d92b" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:33:28.685149Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:33:28.684547Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:33:28.690753Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:33:28.690066Z&quot;}" data-papermill="{&quot;duration&quot;:0.01471,&quot;end_time&quot;:&quot;2024-03-13T19:33:28.691586&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:33:28.676876&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">return_dim_check</span>(matrixZ_M_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "All data frames have the same number of rows and columns."</code></pre>
 </div>
 </div>
 <div id="ed6f37a0-2c88-4d68-ba5a-8fdb1af46565" class="cell" data-editable="true" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:33:28.706830Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:33:28.706202Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:33:31.462944Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:33:31.462200Z&quot;}" data-papermill="{&quot;duration&quot;:2.770301,&quot;end_time&quot;:&quot;2024-03-13T19:33:31.468792&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:33:28.698491&quot;,&quot;status&quot;:&quot;completed&quot;}" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width =</span> <span class="dv">40</span>, <span class="at">repr.plot.height =</span> <span class="dv">20</span>, <span class="at">repr.plot.res =</span> <span class="dv">100</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>heatmap_data_lv<span class="ot">=</span><span class="fu">calculate_pearson_matrices</span>(matrixZ_M_list)</span>
@@ -474,6 +501,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>),  <span class="co"># Adjust y-axis text size</span></span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>)  <span class="co"># Adjust other text sizes (plot title, axis labels, etc.)</span></span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -484,6 +512,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>How are the correlations of B matrix along the different models?</strong></p>
 <div id="85762998-b97f-4a79-bc8b-d64cbed6200a" class="cell" data-editable="true" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:33:31.512054Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:33:31.511356Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:34:18.296990Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:34:18.296011Z&quot;}" data-papermill="{&quot;duration&quot;:46.794634,&quot;end_time&quot;:&quot;2024-03-13T19:34:18.298014&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:33:31.503380&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load all the RDS files, extract the head of the Z element, and save into a named list</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>matrixB_M_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">seq_along</span>(gtex_rob_model_paths), <span class="cf">function</span>(i) {</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Load the RDS file</span></span>
@@ -510,15 +540,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(df)</span>
 <span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Do the present the same number of PATHWAYS and samples?</p>
 <div id="3bc02118-703e-4f93-ae41-ef6504567a60" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:34:18.332966Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:34:18.332230Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:34:18.342232Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:34:18.341535Z&quot;}" data-papermill="{&quot;duration&quot;:0.018422,&quot;end_time&quot;:&quot;2024-03-13T19:34:18.343016&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:34:18.324594&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">return_dim_check</span>(matrixB_M_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "All data frames have the same number of rows and columns."</code></pre>
 </div>
 </div>
 <div id="94f6d359-e27f-4846-9447-34ddfe15bd2c" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:34:18.358379Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:34:18.357732Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:34:20.171161Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:34:20.170377Z&quot;}" data-papermill="{&quot;duration&quot;:1.831154,&quot;end_time&quot;:&quot;2024-03-13T19:34:20.181209&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:34:18.350055&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width =</span> <span class="dv">40</span>, <span class="at">repr.plot.height =</span> <span class="dv">40</span>, <span class="at">repr.plot.res =</span> <span class="dv">100</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>heatmap_data_pw<span class="ot">=</span><span class="fu">calculate_pearson_matrices</span>(matrixB_M_list)</span>
@@ -533,6 +569,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>),  <span class="co"># Adjust y-axis text size</span></span>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>)  <span class="co"># Adjust other text sizes (plot title, axis labels, etc.)</span></span>
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -548,6 +585,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Sig. Pathway by LV: This metric calculates the number of pathways “covered” divided by the number of LVs. Essentially, it provides a ratio indicating the average number of pathways associated with each LV. A higher ratio suggests that, on average, each LV is associated with multiple pathways, which could indicate a more complex relationship between the LVs and the pathways, or possibly a higher degree of coverage and significance in the analysis.</p></li>
 </ul>
 <div id="6dbff269-59f8-49ff-9752-41de2027fb2b" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-13T19:34:20.267039Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-13T19:34:20.266301Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-13T19:34:20.415756Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-13T19:34:20.415052Z&quot;}" data-papermill="{&quot;duration&quot;:0.165315,&quot;end_time&quot;:&quot;2024-03-13T19:34:20.416627&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-13T19:34:20.251312&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width =</span> <span class="dv">10</span>, <span class="at">repr.plot.height =</span> <span class="dv">10</span>, <span class="at">repr.plot.res =</span> <span class="dv">100</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>gtex_rob_models_coverage<span class="ot">=</span><span class="fu">lapply</span>(gtex_rob_models, GetPathwayCoverage)</span>
@@ -583,6 +622,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>),  <span class="co"># Adjust y-axis text size</span></span>
 <span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>)  <span class="co"># Adjust other text sizes (plot title, axis labels, etc.)</span></span>
 <span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
