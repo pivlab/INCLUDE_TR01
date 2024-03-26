@@ -153,7 +153,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#settings-and-paths" id="toc-settings-and-paths" class="nav-link" data-scroll-target="#settings-and-paths">Settings and paths</a></li>
   <li><a href="#load-libraries-and-data" id="toc-load-libraries-and-data" class="nav-link" data-scroll-target="#load-libraries-and-data">Load libraries and data</a></li>
-  <li><a href="#matrix-u-gene-sets-x-lvs" id="toc-matrix-u-gene-sets-x-lvs" class="nav-link" data-scroll-target="#matrix-u-gene-sets-x-lvs">Matrix U (gene sets x LVs)</a>
+  <li><a href="#matrix-z-loadings-gene-x-lvs" id="toc-matrix-z-loadings-gene-x-lvs" class="nav-link" data-scroll-target="#matrix-z-loadings-gene-x-lvs">Matrix Z (loadings; gene x LVs)</a></li>
+  <li><a href="#matrix-b-loadings-lv-x-samples" id="toc-matrix-b-loadings-lv-x-samples" class="nav-link" data-scroll-target="#matrix-b-loadings-lv-x-samples">Matrix B (loadings; LV x samples)</a></li>
+  <li><a href="#matrix-u-loadings-pathway-x-lvs" id="toc-matrix-u-loadings-pathway-x-lvs" class="nav-link" data-scroll-target="#matrix-u-loadings-pathway-x-lvs">Matrix U (loadings; pathway x LVs)</a></li>
+  <li><a href="#summary-of-lv-and-coverage" id="toc-summary-of-lv-and-coverage" class="nav-link" data-scroll-target="#summary-of-lv-and-coverage">Summary of LV and coverage</a>
   <ul class="collapse">
   <li><a href="#all-lvs" id="toc-all-lvs" class="nav-link" data-scroll-target="#all-lvs">All LVs</a></li>
   <li><a href="#significant-pathways-only" id="toc-significant-pathways-only" class="nav-link" data-scroll-target="#significant-pathways-only">Significant pathways, only</a></li>
@@ -162,11 +165,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reconstruction-of-gene-expression-data" id="toc-reconstruction-of-gene-expression-data" class="nav-link" data-scroll-target="#reconstruction-of-gene-expression-data">Reconstruction of gene expression data</a>
   <ul class="collapse">
   <li><a href="#all-lvs-1" id="toc-all-lvs-1" class="nav-link" data-scroll-target="#all-lvs-1">All LVs</a></li>
-  </ul></li>
-  <li><a href="#matrix-z-loadings-genes-x-lvs" id="toc-matrix-z-loadings-genes-x-lvs" class="nav-link" data-scroll-target="#matrix-z-loadings-genes-x-lvs">Matrix Z (loadings; genes x LVs)</a></li>
-  <li><a href="#matrix-u---auc" id="toc-matrix-u---auc" class="nav-link" data-scroll-target="#matrix-u---auc">Matrix U - AUC</a>
-  <ul class="collapse">
-  <li><a href="#all-lvs-2" id="toc-all-lvs-2" class="nav-link" data-scroll-target="#all-lvs-2">All LVs</a></li>
+  <li><a href="#reconstruction-error" id="toc-reconstruction-error" class="nav-link" data-scroll-target="#reconstruction-error">Reconstruction error</a></li>
+  <li><a href="#spearman-correlation-input-reconstructed" id="toc-spearman-correlation-input-reconstructed" class="nav-link" data-scroll-target="#spearman-correlation-input-reconstructed">Spearman correlation (input, reconstructed)</a></li>
+  <li><a href="#relationship-between-error-and-correlation" id="toc-relationship-between-error-and-correlation" class="nav-link" data-scroll-target="#relationship-between-error-and-correlation">Relationship between error and correlation</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -202,329 +203,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="settings-and-paths" class="level2">
 <h2 class="anchored" data-anchor-id="settings-and-paths">Settings and paths</h2>
 <div id="26670112-39dd-401c-9bbd-8f0ec210b5c9" class="cell" data-editable="true" data-papermill="{&quot;duration&quot;:0.023643,&quot;end_time&quot;:&quot;2024-03-05T15:45:25.576874&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-05T15:45:25.553231&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[&quot;parameters&quot;]" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>INPUT_PLIER_MODEL_FILE <span class="ot">=</span> <span class="cn">NULL</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="load-libraries-and-data" class="level2">
 <h2 class="anchored" data-anchor-id="load-libraries-and-data">Load libraries and data</h2>
-<div id="cfa7b91a-fe78-4ee8-b4d7-479d5fb06fff" class="cell" data-editable="true" data-papermill="{&quot;duration&quot;:0.017807,&quot;end_time&quot;:&quot;2024-03-05T15:45:30.214836&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-05T15:45:30.197029&quot;,&quot;status&quot;:&quot;completed&quot;}" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PLIER)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(assertthat)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'scripts/plier_util.R'</span>))</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>INPUT_PLIER_MODEL_FILE<span class="ot">=</span><span class="st">'output/gtex/gtex_plier.rds'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cfa7b91a-fe78-4ee8-b4d7-479d5fb06fff" class="cell" data-editable="true" data-papermill="{&quot;duration&quot;:0.017807,&quot;end_time&quot;:&quot;2024-03-05T15:45:30.214836&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-05T15:45:30.197029&quot;,&quot;status&quot;:&quot;completed&quot;}" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="38">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(PLIER)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(assertthat)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(dplyr)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'scripts/plier_util.R'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<div id="621bc5a6-76bb-4c5f-85c4-29f9b0a49dde" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assert_that</span>(<span class="sc">!</span><span class="fu">is.null</span>(INPUT_PLIER_MODEL_FILE), <span class="at">msg =</span> <span class="st">"Input PLIER model was not specified"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="621bc5a6-76bb-4c5f-85c4-29f9b0a49dde" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assert_that</span>(<span class="sc">!</span><span class="fu">is.null</span>(INPUT_PLIER_MODEL_FILE), <span class="at">msg =</span> <span class="st">"Input PLIER model was not specified"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>INPUT_PLIER_MODEL_FILE<span class="ot">=</span>here<span class="sc">::</span><span class="fu">here</span>(INPUT_PLIER_MODEL_FILE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 TRUE
 </div>
 </div>
 <p>Gene loadings (Z) or the latent space (B)</p>
-<div id="4791f208-13f3-45e7-85fe-088f36e50b5c" class="cell" data-editable="true" data-papermill="{&quot;duration&quot;:0.013326,&quot;end_time&quot;:&quot;2024-03-05T15:45:30.241690&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-05T15:45:30.228364&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="12">
+<div id="4791f208-13f3-45e7-85fe-088f36e50b5c" class="cell" data-editable="true" data-papermill="{&quot;duration&quot;:0.013326,&quot;end_time&quot;:&quot;2024-03-05T15:45:30.241690&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-05T15:45:30.228364&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gtex_plier_results<span class="ot">=</span><span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(INPUT_PLIER_MODEL_FILE))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>num_lvs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(gtex_plier_results<span class="sc">$</span>B)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>matrixU <span class="ot">&lt;-</span> gtex_plier_results<span class="sc">$</span>U</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>matrixZ <span class="ot">&lt;-</span> gtex_plier_results<span class="sc">$</span>Z</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>matrixB <span class="ot">&lt;-</span> gtex_plier_results<span class="sc">$</span>B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-1042
-</div>
+</details>
 </div>
 </section>
-<section id="matrix-u-gene-sets-x-lvs" class="level2">
-<h2 class="anchored" data-anchor-id="matrix-u-gene-sets-x-lvs">Matrix U (gene sets x LVs)</h2>
-<div id="b478ead0-d08b-43ac-ad60-6819ed42155a" class="cell" data-scrolled="true" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixU)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>A matrix: 6 × 1042 of type dbl</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">LV1</th>
-<th data-quarto-table-cell-role="th" scope="col">LV2</th>
-<th data-quarto-table-cell-role="th" scope="col">LV3</th>
-<th data-quarto-table-cell-role="th" scope="col">LV4</th>
-<th data-quarto-table-cell-role="th" scope="col">LV5</th>
-<th data-quarto-table-cell-role="th" scope="col">LV6</th>
-<th data-quarto-table-cell-role="th" scope="col">LV7</th>
-<th data-quarto-table-cell-role="th" scope="col">LV8</th>
-<th data-quarto-table-cell-role="th" scope="col">LV9</th>
-<th data-quarto-table-cell-role="th" scope="col">LV10</th>
-<th data-quarto-table-cell-role="th" scope="col">⋯</th>
-<th data-quarto-table-cell-role="th" scope="col">LV1033</th>
-<th data-quarto-table-cell-role="th" scope="col">LV1034</th>
-<th data-quarto-table-cell-role="th" scope="col">LV1035</th>
-<th data-quarto-table-cell-role="th" scope="col">LV1036</th>
-<th data-quarto-table-cell-role="th" scope="col">LV1037</th>
-<th data-quarto-table-cell-role="th" scope="col">LV1038</th>
-<th data-quarto-table-cell-role="th" scope="col">LV1039</th>
-<th data-quarto-table-cell-role="th" scope="col">LV1040</th>
-<th data-quarto-table-cell-role="th" scope="col">LV1041</th>
-<th data-quarto-table-cell-role="th" scope="col">LV1042</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">IRIS_Bcell-Memory_IgG_IgA</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0.0000000</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>⋯</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">IRIS_Bcell-Memory_IgM</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0.0000000</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>⋯</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">IRIS_Bcell-naive</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0.0000000</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>⋯</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">IRIS_CD4Tcell-N0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0.0000000</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>⋯</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">IRIS_CD4Tcell-Th1-restimulated12hour</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0.0000000</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>⋯</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">IRIS_CD4Tcell-Th1-restimulated48hour</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0.1697034</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>⋯</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<p>If the prior information coefficient matrix, U, has a low number of positive entries for each LV, biological interpretation should be more straightforward. This is one of the constraints in the PLIER model.</p>
-<section id="all-lvs" class="level3">
-<h3 class="anchored" data-anchor-id="all-lvs">All LVs</h3>
-<p>For each latent variable (i.e., not just those significantly associated with prior information), how many of the pathways/genesets have a positive entry?</p>
-<div id="b61f63ce-142a-44b2-8fd4-42bb6573c49f" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>num_lvs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(matrixB)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>u_sparsity_all <span class="ot">&lt;-</span> <span class="fu">CalculateUSparsity</span>(<span class="at">plier.results =</span> gtex_plier_results,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant.only =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(u_sparsity_all),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> u_sparsity_all)) <span class="sc">+</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"proportion of positive entries in U"</span>) <span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-0.000000 0.000000 0.001592 0.004571 0.006369 0.047771 </code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="64dff7f7-bdce-417a-bdd8-50e7c889ce5e" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(u_sparsity_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-0.000000 0.000000 0.001592 0.004571 0.006369 0.047771 </code></pre>
-</div>
-</div>
-</section>
-<section id="significant-pathways-only" class="level3">
-<h3 class="anchored" data-anchor-id="significant-pathways-only">Significant pathways, only</h3>
-<p>What proportion of entries in the U matrix for each LV are significantly associated with that LV?</p>
-<div id="9e1cc054-ced6-44d7-99c1-501575d4c999" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>u_sparsity_sig <span class="ot">&lt;-</span> <span class="fu">CalculateUSparsity</span>(gtex_plier_results, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant.only =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">fdr.cutoff =</span> <span class="fl">0.05</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(u_sparsity_sig),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> u_sparsity_sig)) <span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"proportion of positive entries in U"</span>) <span class="sc">+</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggtitle</span>(<span class="st">"Significant pathways only"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="dac5a078-10f4-459d-bffc-cc5464f7ea14" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(u_sparsity_sig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-0.000000 0.000000 0.000000 0.002051 0.001592 0.046178 </code></pre>
-</div>
-</div>
-</section>
-<section id="pathway-coverage" class="level3">
-<h3 class="anchored" data-anchor-id="pathway-coverage">Pathway coverage</h3>
-<!-- We’re interested in how the LVs output from PLIER are related to the genesets input to PLIER. -->
-<div id="838a53e4-7b6d-45d1-93e5-572ee515a5a8" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>coverage_results <span class="ot">&lt;-</span> <span class="fu">GetPathwayCoverage</span>(<span class="at">plier.results =</span> gtex_plier_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>What proportion of the pathways input into PLIER are significantly associated (FDR cutoff = 0.05) with LVs?</p>
-<div id="108567e8-7e8d-4d3b-acac-c2ab23046d28" class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(coverage_results<span class="sc">$</span>pathway, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-0.519
-</div>
-</div>
-<p>What proportion of the PLIER LVs have a gene set associated with them?</p>
-<div id="c521a73b-6bf0-49bd-b3b0-c9da83a8f88d" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(coverage_results<span class="sc">$</span>lv, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-0.349
-</div>
-</div>
-</section>
-</section>
-<section id="reconstruction-of-gene-expression-data" class="level2">
-<h2 class="anchored" data-anchor-id="reconstruction-of-gene-expression-data">Reconstruction of gene expression data</h2>
-<section id="all-lvs-1" class="level3">
-<h3 class="anchored" data-anchor-id="all-lvs-1">All LVs</h3>
-<p>We reconstruct gene expression data from the gene loadings and LVs.</p>
-<div id="7edc8536-06f1-463e-8096-4679d37b392e" class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reconstructed GTEx expression data from PLIER model</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>recount_recon <span class="ot">&lt;-</span> <span class="fu">GetReconstructedExprs</span>(<span class="at">z.matrix =</span> <span class="fu">as.matrix</span>(matrixZ),</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">b.matrix =</span> <span class="fu">as.matrix</span>(matrixB))</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># write reconstructed expression to results</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>recon.mat.file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(results.dir, </span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"recount2_recount2_model_recon_exprs.RDS"</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(recount.recon, <span class="at">file =</span> recon.mat.file)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># input expression data from intermediate file</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>recount.input.exprs <span class="ot">&lt;-</span> recount.list<span class="sc">$</span>rpkm.cm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="matrix-z-loadings-genes-x-lvs" class="level2">
-<h2 class="anchored" data-anchor-id="matrix-z-loadings-genes-x-lvs">Matrix Z (loadings; genes x LVs)</h2>
-<div id="ae031180-bd21-492d-bc0a-075f36338d9b" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixZ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="matrix-z-loadings-gene-x-lvs" class="level2">
+<h2 class="anchored" data-anchor-id="matrix-z-loadings-gene-x-lvs">Matrix Z (loadings; gene x LVs)</h2>
+<p>The Z matrix captures the association strength between each LV and the genes across the dataset. In essence, each column of Z corresponds to an LV, and each row to a gene. The value at a given position (i,j) within Z indicates the contribution or importance of gene i to LV j. High absolute values suggest a strong association between a gene and an LV, indicating that the gene’s expression patterns are significantly represented by that LV.</p>
+<div id="9c7680ed-b87f-4ae0-ac45-5deec32b3749" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixZ)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(matrixZ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
@@ -680,18 +411,29 @@ TRUE
 </div>
 </div>
 </section>
-<section id="matrix-u---auc" class="level2">
-<h2 class="anchored" data-anchor-id="matrix-u---auc">Matrix U - AUC</h2>
-<section id="all-lvs-2" class="level3">
-<h3 class="anchored" data-anchor-id="all-lvs-2">All LVs</h3>
-<div id="32edc5ca-dbf9-4c70-8e05-9ba34ad875b1" class="cell" data-editable="true" data-papermill="{&quot;duration&quot;:0.0113,&quot;end_time&quot;:&quot;2024-03-05T15:45:30.256003&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-05T15:45:30.244703&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>num_lvs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-1042
+<section id="matrix-b-loadings-lv-x-samples" class="level2">
+<h2 class="anchored" data-anchor-id="matrix-b-loadings-lv-x-samples">Matrix B (loadings; LV x samples)</h2>
+<p>Matrix B represents the association LVs and the samples in the gene expression dataset.</p>
+<div id="a6264035-a819-463a-8e1a-a68caf5d64c2" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixB)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(matrixB)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>ERROR: Error in eval(expr, envir, enclos): object 'matrixB' not found</code></pre>
 </div>
 </div>
-<div id="85a59b9f-f2ac-411c-a360-da5f162fa9f5" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gtex_plier_results<span class="sc">$</span>U)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="matrix-u-loadings-pathway-x-lvs" class="level2">
+<h2 class="anchored" data-anchor-id="matrix-u-loadings-pathway-x-lvs">Matrix U (loadings; pathway x LVs)</h2>
+<p>The matrix U links LVs, derived from gene expression data, to prior biological knowledge encapsulated in gene sets or pathways. Each element in U quantifies the association between a specific pathway and an LV.</p>
+<div id="b478ead0-d08b-43ac-ad60-6819ed42155a" class="cell" data-scrolled="true" data-execution_count="19">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixU)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(matrixU)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
@@ -869,6 +611,250 @@ TRUE
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-lv-and-coverage" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-lv-and-coverage">Summary of LV and coverage</h2>
+<p>If the prior information coefficient matrix, U, has a low number of positive entries for each LV, biological interpretation should be more straightforward. This is one of the constraints in the PLIER model.</p>
+<section id="all-lvs" class="level3">
+<h3 class="anchored" data-anchor-id="all-lvs">All LVs</h3>
+<p>For each latent variable (i.e., not just those significantly associated with prior information), how many of the pathways/genesets have a positive entry?</p>
+<div id="b61f63ce-142a-44b2-8fd4-42bb6573c49f" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>num_lvs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(matrixB)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>u_sparsity_all <span class="ot">&lt;-</span> <span class="fu">CalculateUSparsity</span>(<span class="at">plier.results =</span> gtex_plier_results,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant.only =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(u_sparsity_all),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> u_sparsity_all)) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"proportion of positive entries in U"</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+0.000000 0.000000 0.001592 0.004571 0.006369 0.047771 </code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="64dff7f7-bdce-417a-bdd8-50e7c889ce5e" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(u_sparsity_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+0.000000 0.000000 0.001592 0.004571 0.006369 0.047771 </code></pre>
+</div>
+</div>
+</section>
+<section id="significant-pathways-only" class="level3">
+<h3 class="anchored" data-anchor-id="significant-pathways-only">Significant pathways, only</h3>
+<p>What proportion of entries in the U matrix for each LV are significantly associated with that LV?</p>
+<div id="9e1cc054-ced6-44d7-99c1-501575d4c999" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>u_sparsity_sig <span class="ot">&lt;-</span> <span class="fu">CalculateUSparsity</span>(gtex_plier_results, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant.only =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">fdr.cutoff =</span> <span class="fl">0.05</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(u_sparsity_sig),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> u_sparsity_sig)) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"proportion of positive entries in U"</span>) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggtitle</span>(<span class="st">"Significant pathways only"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="dac5a078-10f4-459d-bffc-cc5464f7ea14" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(u_sparsity_sig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+0.000000 0.000000 0.000000 0.002051 0.001592 0.046178 </code></pre>
+</div>
+</div>
+</section>
+<section id="pathway-coverage" class="level3">
+<h3 class="anchored" data-anchor-id="pathway-coverage">Pathway coverage</h3>
+<!-- We’re interested in how the LVs output from PLIER are related to the genesets input to PLIER. -->
+<div id="838a53e4-7b6d-45d1-93e5-572ee515a5a8" class="cell" data-execution_count="26">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>coverage_results <span class="ot">&lt;-</span> <span class="fu">GetPathwayCoverage</span>(<span class="at">plier.results =</span> gtex_plier_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>What proportion of the pathways input into PLIER are significantly associated (FDR cutoff = 0.05) with LVs?</p>
+<div id="108567e8-7e8d-4d3b-acac-c2ab23046d28" class="cell" data-execution_count="28">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(coverage_results<span class="sc">$</span>pathway, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+0.519
+</div>
+</div>
+<p>What proportion of the PLIER LVs have a gene set associated with them?</p>
+<div id="c521a73b-6bf0-49bd-b3b0-c9da83a8f88d" class="cell" data-execution_count="32">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(coverage_results<span class="sc">$</span>lv, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+0.349
+</div>
+</div>
+</section>
+</section>
+<section id="reconstruction-of-gene-expression-data" class="level2">
+<h2 class="anchored" data-anchor-id="reconstruction-of-gene-expression-data">Reconstruction of gene expression data</h2>
+<p>The “reconstructed” expression data comes form the producto of PLIER gene expression loadings(matrix Z) and latent variables (matrix B)</p>
+<section id="all-lvs-1" class="level3">
+<h3 class="anchored" data-anchor-id="all-lvs-1">All LVs</h3>
+<p>We reconstruct gene expression data from the gene loadings and LVs.</p>
+<div id="7edc8536-06f1-463e-8096-4679d37b392e" class="cell" data-execution_count="45">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reconstructed GTEx expression data from PLIER model</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>recount_recon <span class="ot">&lt;-</span> <span class="fu">GetReconstructedExprs</span>(<span class="at">z.matrix =</span> <span class="fu">as.matrix</span>(matrixZ),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">b.matrix =</span> <span class="fu">as.matrix</span>(matrixB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="2891b767-63e5-4ea2-a907-e51eca228904" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">:input expression data from intermediate file</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load GTEx data</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>gtex_expression_path<span class="ot">=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'output/gtex/GTEx_v8_gene_median_tpm.rds'</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(gtex_expression_path)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove gene ens id column and duplicate genes</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(gtex_expression_data, <span class="at">select =</span> <span class="sc">-</span><span class="fu">c</span>(gene_ens_id))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> gtex_expression_data[<span class="sc">!</span><span class="fu">duplicated</span>(gtex_expression_data[<span class="st">"gene_symbol"</span>]),]</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename rows with gene symbols</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(gtex_expression_data) <span class="ot">&lt;-</span> gtex_expression_data[,<span class="st">"gene_symbol"</span>]</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove gene symbol column</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(gtex_expression_data, <span class="at">select =</span> <span class="sc">-</span><span class="fu">c</span>(gene_symbol))</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove NA</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">=</span> <span class="fu">na.omit</span>(gtex_expression_data)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to matrix</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>gtex_expression_matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(gtex_expression_data)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Z-score normalization</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>recount_input_exprs <span class="ot">&lt;-</span> PLIER<span class="sc">::</span><span class="fu">rowNorm</span>(gtex_expression_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="reconstruction-error" class="level3">
+<h3 class="anchored" data-anchor-id="reconstruction-error">Reconstruction error</h3>
+<p>The reconstruction of the error is carried out using MASE (mean absolute scaled error) between the two gene expression matrices (before and after the reconstruction).</p>
+<div id="85a59b9f-f2ac-411c-a360-da5f162fa9f5" class="cell" data-execution_count="49">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reorder rows and columns equal</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>row_order <span class="ot">&lt;-</span> <span class="fu">rownames</span>(recount_recon)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>col_order <span class="ot">&lt;-</span> <span class="fu">colnames</span>(recount_recon)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>recount_input_exprs <span class="ot">&lt;-</span> recount_input_exprs[row_order, col_order]</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate reconstruction error (per sample)</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>recon_error <span class="ot">&lt;-</span> <span class="fu">GetReconstructionMASE</span>(<span class="at">true.mat =</span> recount_input_exprs, </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">recon.mat =</span> recount_recon)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># get number of LVs</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>num_lvs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(matrixB)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="1d752b77-39f7-4df1-a72e-4e56e87c781c" class="cell" data-execution_count="51">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(recon_error), ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> recon_error)) <span class="sc">+</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample MASE"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Input vs. PLIER reconstructed GTEx data"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs)) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">plot.title =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="spearman-correlation-input-reconstructed" class="level3">
+<h3 class="anchored" data-anchor-id="spearman-correlation-input-reconstructed">Spearman correlation (input, reconstructed)</h3>
+<p>If correlation between the input and the reconstructed data is high, that suggests that reconstruction is “successful.” Given the different constraints in PLIER, we would not expect to perfectly (rho = 1) reconstruct the input data. This particular evaluation will be most useful when we look at applying a trained PLIER model to a test dataset.</p>
+<div id="3b6d2556-7411-41bc-98d3-6dc34e220dd6" class="cell" data-execution_count="54">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate correlation </span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>recon_cor <span class="ot">&lt;-</span> <span class="fu">GetReconstructionCorrelation</span>(<span class="at">true.mat =</span> recount_input_exprs,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">recon.mat =</span> recount_recon)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(recon_cor), ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> recon_cor)) <span class="sc">+</span> </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample Spearman Correlation"</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Input vs. PLIER reconstructed GTEx data"</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs)) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">plot.title =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="relationship-between-error-and-correlation" class="level3">
+<h3 class="anchored" data-anchor-id="relationship-between-error-and-correlation">Relationship between error and correlation</h3>
+<p>We expect that samples that are highly correlated pre- and post-PLIER should have low MASE.</p>
+<div id="f5db2806-70a3-422e-8037-5b6a781e4b92" class="cell" data-execution_count="53">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(recon_cor, recon_error)), </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> recon_cor,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">y =</span> recon_error)) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Spearman Correlation"</span>,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="st">"MASE"</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
 </div>

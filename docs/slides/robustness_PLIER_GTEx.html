@@ -185,24 +185,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="settings-and-paths" class="level2">
 <h2 class="anchored" data-anchor-id="settings-and-paths">Settings and paths</h2>
 <div id="69df5b37-0737-4626-b015-0cafcb7a58c4" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>INPUT_PLIER_ROB_PATH <span class="ot">=</span> <span class="cn">NULL</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="load-libraries-and-data" class="level2">
 <h2 class="anchored" data-anchor-id="load-libraries-and-data">Load libraries and data</h2>
 <div id="7ff22002-4150-41f2-90df-0466fa8c786f" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PLIER)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(assertthat)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'scripts/plier_util.R'</span>))</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>INPUT_PLIER_ROB_PATH<span class="ot">=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'output/gtex/robustness'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div id="372a9a48-6bd5-49c4-ac5b-65a82e41e016" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gtex_rob_model_paths <span class="ot">&lt;-</span> <span class="fu">list.files</span>(INPUT_PLIER_ROB_PATH, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.rds$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div id="a96ea21d-4f76-46f2-85be-fda4ac3db966" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gtex_rob_model_paths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <style>
 .list-inline {list-style: none; margin:0; padding: 0}
@@ -213,6 +225,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="6ba8ac40-fe30-44eb-bc66-086808d0636c" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming gtex_rob_model_paths contains the paths to the .rds files</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>gtex_models <span class="ot">&lt;-</span> <span class="fu">lapply</span>(gtex_rob_model_paths, readRDS)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -253,10 +267,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Display Jaccard index for pathway overlap for the first LV comparison</span></span>
 <span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pathway_overlap_indices[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div id="1a59fbd3-c1cf-4ccd-bc64-17a42c232bcb" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gtex_rob_model_path<span class="ot">=</span>gtex_rob_model_paths[<span class="dv">1</span>]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>gtex_rob_model<span class="ot">=</span><span class="fu">readRDS</span>(gtex_rob_model_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <ul>
 <li><strong>B</strong>: latent variable matrix with dimension k-by-samples. You can correlate this matrix with the phenotype of interest</li>
@@ -268,14 +286,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>summary</strong>: This is based on Uauc and Up which records pathway-LV pairs that are supported by cross-validation test. For a given LV, if you find the associated pathways are interesting, you may want to double check the top ranked genes for this LV by looking at Z</li>
 </ul>
 <div id="1f18a974-2a0f-41d5-97d3-077d05bc1823" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>matrixU <span class="ot">&lt;-</span> gtex_rob_model<span class="sc">$</span>U</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>matrixZ <span class="ot">&lt;-</span> gtex_rob_model<span class="sc">$</span>Z</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>matrixB <span class="ot">&lt;-</span> gtex_rob_model<span class="sc">$</span>B</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>PLIER_summary<span class="ot">=</span>gtex_rob_model<span class="sc">$</span>summary</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>gtex_rob_model<span class="sc">$</span>L1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div id="40878685-dc5e-4d0b-bde5-ddb5c0ee06d6" class="cell" data-execution_count="43">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(PLIER_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
@@ -353,7 +377,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="7cbb76b5-ef66-40e3-b424-5768bb637ca5" class="cell" data-execution_count="51">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixZ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
@@ -509,7 +536,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="894a9250-8cc1-456c-8270-87201e4f0ba9" class="cell" data-execution_count="50">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gtex_rob_model<span class="sc">$</span>Uauc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
@@ -691,10 +721,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="fb677f03-67ec-49a2-a804-9cf03d1bb1ca" class="cell" data-execution_count="36">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(majorCellTypes)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>corOut<span class="ot">=</span><span class="fu">cor</span>(<span class="fu">t</span>(gtex_rob_model<span class="sc">$</span>B[, <span class="fu">rownames</span>(majorCellTypes)]), majorCellTypes, <span class="at">method=</span><span class="st">"s"</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(corOut)<span class="ot">=</span><span class="fu">strtrim</span>(<span class="fu">rownames</span>(corOut),<span class="dv">30</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(corOut) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-error">
 <pre><code>ERROR: Error in parse(text = x, srcfile = src): &lt;text&gt;:5:0: unexpected end of input
 3: rownames(corOut)=strtrim(rownames(corOut),30)
@@ -703,8 +736,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="ee9b5599-c8d6-404d-bbf6-3d074f2b0b42" class="cell" data-execution_count="34">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width=</span><span class="dv">4</span>, <span class="at">repr.plot.height=</span><span class="dv">3</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotU</span>(gtex_rob_model, <span class="at">auc.cutoff =</span> <span class="fl">0.70</span>, <span class="at">fdr.cutoff =</span> <span class="fl">0.05</span>, <span class="at">top =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
