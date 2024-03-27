@@ -202,59 +202,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We’re going to explore the GTEx dataset and the corresponding PLIER model.</p>
 <section id="settings-and-paths" class="level2">
 <h2 class="anchored" data-anchor-id="settings-and-paths">Settings and paths</h2>
-<div id="26670112-39dd-401c-9bbd-8f0ec210b5c9" class="cell" data-editable="true" data-papermill="{&quot;duration&quot;:0.023643,&quot;end_time&quot;:&quot;2024-03-05T15:45:25.576874&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-05T15:45:25.553231&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[&quot;parameters&quot;]" data-execution_count="9">
+<div id="26670112-39dd-401c-9bbd-8f0ec210b5c9" class="cell" data-editable="true" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:05.924158Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:05.922083Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:05.941325Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:05.940364Z&quot;}" data-papermill="{&quot;duration&quot;:0.02573,&quot;end_time&quot;:&quot;2024-03-26T20:23:05.942643&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:05.916913&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[&quot;parameters&quot;]" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>INPUT_PLIER_MODEL_FILE <span class="ot">=</span> <span class="cn">NULL</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<div id="1b5cf046" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:05.966816Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:05.948614Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:05.973896Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:05.972958Z&quot;}" data-papermill="{&quot;duration&quot;:0.029827,&quot;end_time&quot;:&quot;2024-03-26T20:23:05.975129&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:05.945302&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[&quot;injected-parameters&quot;]" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>INPUT_PLIER_MODEL_FILE <span class="ot">=</span> <span class="st">"output/gtex/plier_result_k1_frac0.7.rds"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section>
 <section id="load-libraries-and-data" class="level2">
 <h2 class="anchored" data-anchor-id="load-libraries-and-data">Load libraries and data</h2>
-<div id="cfa7b91a-fe78-4ee8-b4d7-479d5fb06fff" class="cell" data-editable="true" data-papermill="{&quot;duration&quot;:0.017807,&quot;end_time&quot;:&quot;2024-03-05T15:45:30.214836&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-05T15:45:30.197029&quot;,&quot;status&quot;:&quot;completed&quot;}" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="38">
+<div id="cfa7b91a-fe78-4ee8-b4d7-479d5fb06fff" class="cell" data-editable="true" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:05.986833Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:05.985985Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:06.727008Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:06.726119Z&quot;}" data-papermill="{&quot;duration&quot;:0.745597,&quot;end_time&quot;:&quot;2024-03-26T20:23:06.728311&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:05.982714&quot;,&quot;status&quot;:&quot;completed&quot;}" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(PLIER)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(assertthat)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(dplyr)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'scripts/plier_util.R'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(PLIER)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(assertthat)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(dplyr)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'scripts/plier_util.R'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="621bc5a6-76bb-4c5f-85c4-29f9b0a49dde" class="cell" data-execution_count="5">
+<div id="621bc5a6-76bb-4c5f-85c4-29f9b0a49dde" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:06.743297Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:06.742379Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:06.752496Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:06.751742Z&quot;}" data-papermill="{&quot;duration&quot;:0.022506,&quot;end_time&quot;:&quot;2024-03-26T20:23:06.753602&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:06.731096&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assert_that</span>(<span class="sc">!</span><span class="fu">is.null</span>(INPUT_PLIER_MODEL_FILE), <span class="at">msg =</span> <span class="st">"Input PLIER model was not specified"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>INPUT_PLIER_MODEL_FILE<span class="ot">=</span>here<span class="sc">::</span><span class="fu">here</span>(INPUT_PLIER_MODEL_FILE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assert_that</span>(<span class="sc">!</span><span class="fu">is.null</span>(INPUT_PLIER_MODEL_FILE), <span class="at">msg =</span> <span class="st">"Input PLIER model was not specified"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>INPUT_PLIER_MODEL_FILE<span class="ot">=</span>here<span class="sc">::</span><span class="fu">here</span>(INPUT_PLIER_MODEL_FILE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 TRUE
 </div>
 </div>
 <p>Gene loadings (Z) or the latent space (B)</p>
-<div id="4791f208-13f3-45e7-85fe-088f36e50b5c" class="cell" data-editable="true" data-papermill="{&quot;duration&quot;:0.013326,&quot;end_time&quot;:&quot;2024-03-05T15:45:30.241690&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-05T15:45:30.228364&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="15">
+<div id="4791f208-13f3-45e7-85fe-088f36e50b5c" class="cell" data-editable="true" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:06.765201Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:06.764572Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:11.542613Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:11.541680Z&quot;}" data-papermill="{&quot;duration&quot;:4.782277,&quot;end_time&quot;:&quot;2024-03-26T20:23:11.543660&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:06.761383&quot;,&quot;status&quot;:&quot;completed&quot;}" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gtex_plier_results<span class="ot">=</span><span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(INPUT_PLIER_MODEL_FILE))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>num_lvs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(gtex_plier_results<span class="sc">$</span>B)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>matrixU <span class="ot">&lt;-</span> gtex_plier_results<span class="sc">$</span>U</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>matrixZ <span class="ot">&lt;-</span> gtex_plier_results<span class="sc">$</span>Z</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>matrixB <span class="ot">&lt;-</span> gtex_plier_results<span class="sc">$</span>B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gtex_plier_results<span class="ot">=</span><span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(INPUT_PLIER_MODEL_FILE))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>num_lvs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(gtex_plier_results<span class="sc">$</span>B)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>matrixU <span class="ot">&lt;-</span> gtex_plier_results<span class="sc">$</span>U</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>matrixZ <span class="ot">&lt;-</span> gtex_plier_results<span class="sc">$</span>Z</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>matrixB <span class="ot">&lt;-</span> gtex_plier_results<span class="sc">$</span>B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="matrix-z-loadings-gene-x-lvs" class="level2">
 <h2 class="anchored" data-anchor-id="matrix-z-loadings-gene-x-lvs">Matrix Z (loadings; gene x LVs)</h2>
 <p>The Z matrix captures the association strength between each LV and the genes across the dataset. In essence, each column of Z corresponds to an LV, and each row to a gene. The value at a given position (i,j) within Z indicates the contribution or importance of gene i to LV j. High absolute values suggest a strong association between a gene and an LV, indicating that the gene’s expression patterns are significantly represented by that LV.</p>
-<div id="9c7680ed-b87f-4ae0-ac45-5deec32b3749" class="cell" data-execution_count="17">
+<div id="9c7680ed-b87f-4ae0-ac45-5deec32b3749" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:11.568969Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:11.568337Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:11.584030Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:11.583323Z&quot;}" data-papermill="{&quot;duration&quot;:0.020449,&quot;end_time&quot;:&quot;2024-03-26T20:23:11.584835&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:11.564386&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixZ)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(matrixZ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixZ)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(matrixZ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -263,172 +270,364 @@ TRUE
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th" scope="row">GAS6</td>
-<td>0.20762129</td>
 <td>0.00000000</td>
 <td>0.0000000</td>
+<td>0.509601923</td>
+<td>0.02303278</td>
+<td>0.000000000</td>
+<td>0.047740572</td>
 <td>0.00000000</td>
-<td>0.0000000</td>
-<td>0.02653939</td>
-<td>0.00000000</td>
-<td>0.00000000</td>
-<td>0.62387382</td>
-<td>0.18440284</td>
+<td>0.000000000</td>
+<td>0.437047051</td>
+<td>0.1329501</td>
 <td>⋯</td>
 <td>0.0000000</td>
 <td>0.00000000</td>
-<td>0.1552670</td>
-<td>0.00000000</td>
-<td>0.00000000</td>
-<td>0.03676118</td>
+<td>0.000000000</td>
+<td>0.0000000</td>
+<td>0.0000000</td>
+<td>0.02756796</td>
 <td>0</td>
-<td>0.03729953</td>
-<td>0.01813663</td>
-<td>0.32003652</td>
+<td>0.0464884923</td>
+<td>0.00000000</td>
+<td>0.37930827</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th" scope="row">MMP14</td>
-<td>0.09893808</td>
 <td>0.00000000</td>
 <td>0.0000000</td>
-<td>0.03620340</td>
+<td>0.000000000</td>
+<td>0.08079764</td>
+<td>0.000000000</td>
+<td>0.000000000</td>
+<td>0.00000000</td>
+<td>0.000000000</td>
+<td>0.628765339</td>
 <td>0.0000000</td>
-<td>0.00000000</td>
-<td>0.00000000</td>
-<td>0.00000000</td>
-<td>0.57073574</td>
-<td>0.00000000</td>
 <td>⋯</td>
 <td>0.0000000</td>
-<td>0.02603330</td>
+<td>0.05210891</td>
+<td>0.060536933</td>
 <td>0.0000000</td>
-<td>0.01795993</td>
-<td>0.02515933</td>
+<td>0.0000000</td>
 <td>0.00000000</td>
 <td>0</td>
+<td>0.0000000000</td>
 <td>0.00000000</td>
-<td>0.13488302</td>
-<td>0.32878006</td>
+<td>0.37263566</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th" scope="row">MARCKSL1</td>
-<td>0.00000000</td>
-<td>0.00000000</td>
-<td>0.0689154</td>
-<td>0.00000000</td>
+<td>0.02950483</td>
 <td>0.0000000</td>
-<td>0.06473675</td>
+<td>0.005777573</td>
 <td>0.00000000</td>
+<td>0.000000000</td>
+<td>0.059612700</td>
 <td>0.00000000</td>
-<td>0.06586991</td>
-<td>0.04277300</td>
+<td>0.000000000</td>
+<td>0.004135659</td>
+<td>0.0000000</td>
 <td>⋯</td>
-<td>0.1104464</td>
+<td>0.1121266</td>
 <td>0.00000000</td>
+<td>0.000000000</td>
 <td>0.0000000</td>
-<td>0.00000000</td>
-<td>0.00000000</td>
-<td>0.00000000</td>
+<td>0.0000000</td>
+<td>0.01177523</td>
 <td>0</td>
-<td>0.00000000</td>
-<td>0.00000000</td>
-<td>0.07458389</td>
+<td>0.0009735427</td>
+<td>0.03060058</td>
+<td>0.03408577</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th" scope="row">SPARC</td>
 <td>0.00000000</td>
-<td>0.00000000</td>
 <td>0.0000000</td>
-<td>0.08840532</td>
-<td>0.0000000</td>
+<td>0.000000000</td>
+<td>0.03919136</td>
+<td>0.000000000</td>
+<td>0.000000000</td>
 <td>0.00000000</td>
-<td>0.00000000</td>
-<td>0.03131448</td>
-<td>0.20514237</td>
-<td>0.45000462</td>
+<td>0.040459910</td>
+<td>0.277030056</td>
+<td>0.3893688</td>
 <td>⋯</td>
 <td>0.0000000</td>
 <td>0.00000000</td>
-<td>0.1168224</td>
-<td>0.00000000</td>
-<td>0.03407571</td>
-<td>0.13301524</td>
+<td>0.000000000</td>
+<td>0.0000000</td>
+<td>0.0553349</td>
+<td>0.26913268</td>
 <td>0</td>
-<td>0.01732749</td>
+<td>0.0385386762</td>
 <td>0.00000000</td>
-<td>0.00000000</td>
+<td>0.03187780</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th" scope="row">CTSD</td>
 <td>0.00000000</td>
-<td>0.09038044</td>
-<td>0.3689761</td>
-<td>0.05409820</td>
-<td>0.1073371</td>
+<td>0.1542023</td>
+<td>0.688261428</td>
+<td>0.08714279</td>
+<td>0.000000000</td>
+<td>0.008311279</td>
 <td>0.00000000</td>
-<td>0.00000000</td>
-<td>0.09150932</td>
-<td>1.38866053</td>
-<td>0.02098779</td>
+<td>0.167463435</td>
+<td>1.852126115</td>
+<td>0.1398464</td>
 <td>⋯</td>
 <td>0.0000000</td>
-<td>0.02845362</td>
-<td>0.2228255</td>
-<td>0.00000000</td>
-<td>0.00000000</td>
+<td>0.05531637</td>
+<td>0.004370088</td>
+<td>0.0000000</td>
+<td>0.0000000</td>
 <td>0.00000000</td>
 <td>0</td>
-<td>0.00000000</td>
-<td>0.04607547</td>
-<td>0.54812303</td>
+<td>0.0000000000</td>
+<td>0.09982121</td>
+<td>0.57563089</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th" scope="row">EPAS1</td>
-<td>0.01069210</td>
 <td>0.00000000</td>
 <td>0.0000000</td>
+<td>0.000000000</td>
 <td>0.00000000</td>
-<td>0.0000000</td>
-<td>0.04134291</td>
-<td>0.03603086</td>
-<td>0.00000000</td>
-<td>0.11679199</td>
-<td>0.11713569</td>
+<td>0.008342559</td>
+<td>0.035922995</td>
+<td>0.05970857</td>
+<td>0.008032573</td>
+<td>0.178316151</td>
+<td>0.0212524</td>
 <td>⋯</td>
 <td>0.0000000</td>
 <td>0.00000000</td>
-<td>0.0000000</td>
-<td>0.00000000</td>
-<td>0.37824176</td>
+<td>0.000000000</td>
+<td>0.0902047</td>
+<td>0.4519502</td>
 <td>0.00000000</td>
 <td>0</td>
+<td>0.0471251644</td>
 <td>0.00000000</td>
-<td>0.28356290</td>
-<td>0.14947889</td>
+<td>0.15490261</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>6683</li><li>1042</li></ol>
 </div>
 </div>
 </section>
 <section id="matrix-b-loadings-lv-x-samples" class="level2">
 <h2 class="anchored" data-anchor-id="matrix-b-loadings-lv-x-samples">Matrix B (loadings; LV x samples)</h2>
 <p>Matrix B represents the association LVs and the samples in the gene expression dataset.</p>
-<div id="a6264035-a819-463a-8e1a-a68caf5d64c2" class="cell" data-execution_count="1">
+<div id="a6264035-a819-463a-8e1a-a68caf5d64c2" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:11.597772Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:11.596953Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:11.613913Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:11.613164Z&quot;}" data-papermill="{&quot;duration&quot;:0.021731,&quot;end_time&quot;:&quot;2024-03-26T20:23:11.614772&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:11.593041&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixB)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(matrixB)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixB)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(matrixB)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-error">
-<pre><code>ERROR: Error in eval(expr, envir, enclos): object 'matrixB' not found</code></pre>
+<div class="cell-output cell-output-display">
+<div>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A matrix: 6 × 17382 of type dbl</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-1117F-0226-SM-5GZZ7</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-1117F-0426-SM-5EGHI</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-1117F-0526-SM-5EGHJ</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-1117F-0626-SM-5N9CS</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-1117F-0726-SM-5GIEN</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-1117F-1326-SM-5EGHH</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-1117F-2426-SM-5EGGH</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-1117F-2526-SM-5GZY6</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-1117F-2826-SM-5GZXL</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-1117F-2926-SM-5GZYI</th>
+<th data-quarto-table-cell-role="th" scope="col">⋯</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-ZZPU-1126-SM-5N9CW</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-ZZPU-1226-SM-5N9CK</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-ZZPU-1326-SM-5GZWS</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-ZZPU-1426-SM-5GZZ6</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-ZZPU-1826-SM-5E43L</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-ZZPU-2126-SM-5EGIU</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-ZZPU-2226-SM-5EGIV</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-ZZPU-2426-SM-5E44I</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-ZZPU-2626-SM-5E45Y</th>
+<th data-quarto-table-cell-role="th" scope="col">GTEX-ZZPU-2726-SM-5NQ8O</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">1,IRIS_Neutrophil-Resting</td>
+<td>0.002535341</td>
+<td>-0.04370579</td>
+<td>0.008896618</td>
+<td>-0.040861327</td>
+<td>0.01004205</td>
+<td>-0.04501671</td>
+<td>-0.02085150</td>
+<td>0.008406361</td>
+<td>-0.01470911</td>
+<td>0.015219110</td>
+<td>⋯</td>
+<td>0.003852116</td>
+<td>-0.02826184</td>
+<td>-0.013730186</td>
+<td>0.029131151</td>
+<td>0.008022848</td>
+<td>0.03222826</td>
+<td>0.039309007</td>
+<td>-0.02315738</td>
+<td>0.0309807534</td>
+<td>-0.062869901</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">2,IRIS_Neutrophil-Resting</td>
+<td>-0.036216704</td>
+<td>-0.04205619</td>
+<td>0.015346513</td>
+<td>-0.032393481</td>
+<td>-0.03428301</td>
+<td>-0.02622960</td>
+<td>-0.02392661</td>
+<td>-0.016633246</td>
+<td>-0.01347106</td>
+<td>-0.080844631</td>
+<td>⋯</td>
+<td>-0.014479596</td>
+<td>0.01169663</td>
+<td>0.003722825</td>
+<td>-0.006459869</td>
+<td>0.015024403</td>
+<td>-0.01393061</td>
+<td>0.032931211</td>
+<td>-0.01396817</td>
+<td>-0.0127770805</td>
+<td>0.004344517</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">3,REACTOME_TRANSMEMBRANE_TRANSPORT_OF_SMALL_MOLECULES</td>
+<td>-0.049782191</td>
+<td>-0.02805278</td>
+<td>0.056003293</td>
+<td>0.072123311</td>
+<td>0.05526153</td>
+<td>-0.05390967</td>
+<td>-0.01613316</td>
+<td>0.007187259</td>
+<td>-0.04157486</td>
+<td>0.004774956</td>
+<td>⋯</td>
+<td>0.012666339</td>
+<td>0.00012085</td>
+<td>-0.065989568</td>
+<td>0.034201192</td>
+<td>-0.032211689</td>
+<td>0.04401801</td>
+<td>0.001256358</td>
+<td>0.15114167</td>
+<td>-0.0008082211</td>
+<td>0.004330334</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">4,REACTOME_DNA_STRAND_ELONGATION</td>
+<td>-0.070034949</td>
+<td>-0.03354618</td>
+<td>-0.105972428</td>
+<td>-0.108746841</td>
+<td>-0.04998180</td>
+<td>-0.10285130</td>
+<td>-0.07395319</td>
+<td>0.099978788</td>
+<td>-0.03305152</td>
+<td>-0.068522377</td>
+<td>⋯</td>
+<td>-0.034011051</td>
+<td>-0.05845505</td>
+<td>-0.063836002</td>
+<td>-0.021872189</td>
+<td>-0.085122302</td>
+<td>-0.01726072</td>
+<td>0.369542669</td>
+<td>-0.13096173</td>
+<td>-0.0275255871</td>
+<td>-0.062070072</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">5,REACTOME_NEURONAL_SYSTEM</td>
+<td>0.050598296</td>
+<td>-0.01247532</td>
+<td>0.030158286</td>
+<td>0.001910724</td>
+<td>-0.02141408</td>
+<td>-0.01023089</td>
+<td>-0.02101647</td>
+<td>-0.009126819</td>
+<td>-0.01752155</td>
+<td>-0.028291885</td>
+<td>⋯</td>
+<td>-0.035831201</td>
+<td>-0.05187064</td>
+<td>0.020248505</td>
+<td>-0.002611368</td>
+<td>-0.019189933</td>
+<td>-0.04118643</td>
+<td>0.012926796</td>
+<td>0.03096042</td>
+<td>-0.0611740629</td>
+<td>0.007897079</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">6,REACTOME_CELL_CYCLE_CHECKPOINTS</td>
+<td>-0.076088528</td>
+<td>-0.05600864</td>
+<td>-0.114322889</td>
+<td>-0.011100703</td>
+<td>-0.06032094</td>
+<td>-0.06958746</td>
+<td>-0.02193094</td>
+<td>-0.057255665</td>
+<td>-0.03764977</td>
+<td>-0.021212990</td>
+<td>⋯</td>
+<td>-0.042958319</td>
+<td>-0.01293398</td>
+<td>-0.064663867</td>
+<td>-0.025796319</td>
+<td>-0.027538524</td>
+<td>-0.11030715</td>
+<td>-0.031614062</td>
+<td>-0.03923539</td>
+<td>-0.0570118731</td>
+<td>-0.022636503</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>1042</li><li>17382</li></ol>
 </div>
 </div>
 </section>
 <section id="matrix-u-loadings-pathway-x-lvs" class="level2">
 <h2 class="anchored" data-anchor-id="matrix-u-loadings-pathway-x-lvs">Matrix U (loadings; pathway x LVs)</h2>
 <p>The matrix U links LVs, derived from gene expression data, to prior biological knowledge encapsulated in gene sets or pathways. Each element in U quantifies the association between a specific pathway and an LV.</p>
-<div id="b478ead0-d08b-43ac-ad60-6819ed42155a" class="cell" data-scrolled="true" data-execution_count="19">
+<div id="b478ead0-d08b-43ac-ad60-6819ed42155a" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:11.633002Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:11.632406Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:11.645701Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:11.644968Z&quot;}" data-papermill="{&quot;duration&quot;:0.018565,&quot;end_time&quot;:&quot;2024-03-26T20:23:11.646509&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:11.627944&quot;,&quot;status&quot;:&quot;completed&quot;}" data-scrolled="true" data-tags="[]" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matrixU)</span>
@@ -590,7 +789,7 @@ TRUE
 <td>0</td>
 <td>0</td>
 <td>0</td>
-<td>0.1697034</td>
+<td>0.2299679</td>
 <td>0</td>
 <td>0</td>
 <td>0</td>
@@ -613,6 +812,14 @@ TRUE
 </table>
 </div>
 </div>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>628</li><li>1042</li></ol>
+</div>
 </div>
 </section>
 <section id="summary-of-lv-and-coverage" class="level2">
@@ -621,7 +828,7 @@ TRUE
 <section id="all-lvs" class="level3">
 <h3 class="anchored" data-anchor-id="all-lvs">All LVs</h3>
 <p>For each latent variable (i.e., not just those significantly associated with prior information), how many of the pathways/genesets have a positive entry?</p>
-<div id="b61f63ce-142a-44b2-8fd4-42bb6573c49f" class="cell" data-execution_count="18">
+<div id="b61f63ce-142a-44b2-8fd4-42bb6573c49f" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:11.660888Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:11.660276Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:11.854442Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:11.845129Z&quot;}" data-papermill="{&quot;duration&quot;:0.199383,&quot;end_time&quot;:&quot;2024-03-26T20:23:11.855641&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:11.656258&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>num_lvs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(matrixB)</span>
@@ -636,90 +843,86 @@ TRUE
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-0.000000 0.000000 0.001592 0.004571 0.006369 0.047771 </code></pre>
-</div>
-<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="64dff7f7-bdce-417a-bdd8-50e7c889ce5e" class="cell" data-execution_count="20">
+<div id="64dff7f7-bdce-417a-bdd8-50e7c889ce5e" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:11.872048Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:11.871359Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:11.879255Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:11.878526Z&quot;}" data-papermill="{&quot;duration&quot;:0.019329,&quot;end_time&quot;:&quot;2024-03-26T20:23:11.880112&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:11.860783&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(u_sparsity_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(u_sparsity_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-0.000000 0.000000 0.001592 0.004571 0.006369 0.047771 </code></pre>
+0.000000 0.000000 0.003185 0.005460 0.007962 0.057325 </code></pre>
 </div>
 </div>
 </section>
 <section id="significant-pathways-only" class="level3">
 <h3 class="anchored" data-anchor-id="significant-pathways-only">Significant pathways, only</h3>
 <p>What proportion of entries in the U matrix for each LV are significantly associated with that LV?</p>
-<div id="9e1cc054-ced6-44d7-99c1-501575d4c999" class="cell" data-execution_count="21">
+<div id="9e1cc054-ced6-44d7-99c1-501575d4c999" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:11.900734Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:11.900139Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:12.047593Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:12.046826Z&quot;}" data-papermill="{&quot;duration&quot;:0.154131,&quot;end_time&quot;:&quot;2024-03-26T20:23:12.048629&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:11.894498&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>u_sparsity_sig <span class="ot">&lt;-</span> <span class="fu">CalculateUSparsity</span>(gtex_plier_results, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant.only =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">fdr.cutoff =</span> <span class="fl">0.05</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(u_sparsity_sig),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> u_sparsity_sig)) <span class="sc">+</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"proportion of positive entries in U"</span>) <span class="sc">+</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggtitle</span>(<span class="st">"Significant pathways only"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>u_sparsity_sig <span class="ot">&lt;-</span> <span class="fu">CalculateUSparsity</span>(gtex_plier_results, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">significant.only =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">fdr.cutoff =</span> <span class="fl">0.05</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(u_sparsity_sig),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> u_sparsity_sig)) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"proportion of positive entries in U"</span>) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggtitle</span>(<span class="st">"Significant pathways only"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="dac5a078-10f4-459d-bffc-cc5464f7ea14" class="cell" data-execution_count="22">
+<div id="dac5a078-10f4-459d-bffc-cc5464f7ea14" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:12.066915Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:12.066311Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:12.085557Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:12.072326Z&quot;}" data-papermill="{&quot;duration&quot;:0.031771,&quot;end_time&quot;:&quot;2024-03-26T20:23:12.086541&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:12.054770&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(u_sparsity_sig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(u_sparsity_sig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-0.000000 0.000000 0.000000 0.002051 0.001592 0.046178 </code></pre>
+0.000000 0.000000 0.000000 0.002317 0.001592 0.044586 </code></pre>
 </div>
 </div>
 </section>
 <section id="pathway-coverage" class="level3">
 <h3 class="anchored" data-anchor-id="pathway-coverage">Pathway coverage</h3>
 <!-- We’re interested in how the LVs output from PLIER are related to the genesets input to PLIER. -->
-<div id="838a53e4-7b6d-45d1-93e5-572ee515a5a8" class="cell" data-execution_count="26">
+<div id="838a53e4-7b6d-45d1-93e5-572ee515a5a8" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:12.103894Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:12.103300Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:12.115191Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:12.114461Z&quot;}" data-papermill="{&quot;duration&quot;:0.017409,&quot;end_time&quot;:&quot;2024-03-26T20:23:12.116079&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:12.098670&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>coverage_results <span class="ot">&lt;-</span> <span class="fu">GetPathwayCoverage</span>(<span class="at">plier.results =</span> gtex_plier_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>coverage_results <span class="ot">&lt;-</span> <span class="fu">GetPathwayCoverage</span>(<span class="at">plier.results =</span> gtex_plier_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>What proportion of the pathways input into PLIER are significantly associated (FDR cutoff = 0.05) with LVs?</p>
-<div id="108567e8-7e8d-4d3b-acac-c2ab23046d28" class="cell" data-execution_count="28">
+<div id="108567e8-7e8d-4d3b-acac-c2ab23046d28" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:12.133241Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:12.132535Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:12.139045Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:12.138333Z&quot;}" data-papermill="{&quot;duration&quot;:0.011861,&quot;end_time&quot;:&quot;2024-03-26T20:23:12.139842&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:12.127981&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(coverage_results<span class="sc">$</span>pathway, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(coverage_results<span class="sc">$</span>pathway, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-0.519
+0.561
 </div>
 </div>
 <p>What proportion of the PLIER LVs have a gene set associated with them?</p>
-<div id="c521a73b-6bf0-49bd-b3b0-c9da83a8f88d" class="cell" data-execution_count="32">
+<div id="c521a73b-6bf0-49bd-b3b0-c9da83a8f88d" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:12.157296Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:12.156581Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:12.163015Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:12.162290Z&quot;}" data-papermill="{&quot;duration&quot;:0.01189,&quot;end_time&quot;:&quot;2024-03-26T20:23:12.163799&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:12.151909&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(coverage_results<span class="sc">$</span>lv, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(coverage_results<span class="sc">$</span>lv, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-0.349
+0.374
 </div>
 </div>
 </section>
@@ -730,101 +933,74 @@ TRUE
 <section id="all-lvs-1" class="level3">
 <h3 class="anchored" data-anchor-id="all-lvs-1">All LVs</h3>
 <p>We reconstruct gene expression data from the gene loadings and LVs.</p>
-<div id="7edc8536-06f1-463e-8096-4679d37b392e" class="cell" data-execution_count="45">
+<div id="7edc8536-06f1-463e-8096-4679d37b392e" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:12.189573Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:12.188870Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:23:16.363908Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:23:16.362864Z&quot;}" data-papermill="{&quot;duration&quot;:4.180765,&quot;end_time&quot;:&quot;2024-03-26T20:23:16.364901&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:12.184136&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reconstructed GTEx expression data from PLIER model</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>recount_recon <span class="ot">&lt;-</span> <span class="fu">GetReconstructedExprs</span>(<span class="at">z.matrix =</span> <span class="fu">as.matrix</span>(matrixZ),</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">b.matrix =</span> <span class="fu">as.matrix</span>(matrixB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reconstructed GTEx expression data from PLIER model</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>recount_recon <span class="ot">&lt;-</span> <span class="fu">GetReconstructedExprs</span>(<span class="at">z.matrix =</span> <span class="fu">as.matrix</span>(matrixZ),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">b.matrix =</span> <span class="fu">as.matrix</span>(matrixB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="2891b767-63e5-4ea2-a907-e51eca228904" class="cell" data-execution_count="27">
+<div id="2891b767-63e5-4ea2-a907-e51eca228904" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:23:16.380918Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:23:16.380249Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:24:51.441274Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:24:51.440269Z&quot;}" data-papermill="{&quot;duration&quot;:95.073277,&quot;end_time&quot;:&quot;2024-03-26T20:24:51.442745&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:23:16.369468&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">:input expression data from intermediate file</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load GTEx data</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>gtex_expression_path<span class="ot">=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'output/gtex/GTEx_v8_gene_median_tpm.rds'</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(gtex_expression_path)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove gene ens id column and duplicate genes</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(gtex_expression_data, <span class="at">select =</span> <span class="sc">-</span><span class="fu">c</span>(gene_ens_id))</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> gtex_expression_data[<span class="sc">!</span><span class="fu">duplicated</span>(gtex_expression_data[<span class="st">"gene_symbol"</span>]),]</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename rows with gene symbols</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(gtex_expression_data) <span class="ot">&lt;-</span> gtex_expression_data[,<span class="st">"gene_symbol"</span>]</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove gene symbol column</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(gtex_expression_data, <span class="at">select =</span> <span class="sc">-</span><span class="fu">c</span>(gene_symbol))</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove NA</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">=</span> <span class="fu">na.omit</span>(gtex_expression_data)</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to matrix</span></span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>gtex_expression_matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(gtex_expression_data)</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Z-score normalization</span></span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>recount_input_exprs <span class="ot">&lt;-</span> PLIER<span class="sc">::</span><span class="fu">rowNorm</span>(gtex_expression_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">:input expression data from intermediate file</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load GTEx data</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>gtex_expression_path<span class="ot">=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'output/gtex/GTEx_v8_gene_median_tpm.rds'</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(gtex_expression_path)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove gene ens id column and duplicate genes</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(gtex_expression_data, <span class="at">select =</span> <span class="sc">-</span><span class="fu">c</span>(gene_ens_id))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> gtex_expression_data[<span class="sc">!</span><span class="fu">duplicated</span>(gtex_expression_data[<span class="st">"gene_symbol"</span>]),]</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename rows with gene symbols</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(gtex_expression_data) <span class="ot">&lt;-</span> gtex_expression_data[,<span class="st">"gene_symbol"</span>]</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove gene symbol column</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(gtex_expression_data, <span class="at">select =</span> <span class="sc">-</span><span class="fu">c</span>(gene_symbol))</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove NA</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>gtex_expression_data <span class="ot">=</span> <span class="fu">na.omit</span>(gtex_expression_data)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to matrix</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>gtex_expression_matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(gtex_expression_data)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Z-score normalization</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>recount_input_exprs <span class="ot">&lt;-</span> PLIER<span class="sc">::</span><span class="fu">rowNorm</span>(gtex_expression_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="reconstruction-error" class="level3">
 <h3 class="anchored" data-anchor-id="reconstruction-error">Reconstruction error</h3>
 <p>The reconstruction of the error is carried out using MASE (mean absolute scaled error) between the two gene expression matrices (before and after the reconstruction).</p>
-<div id="85a59b9f-f2ac-411c-a360-da5f162fa9f5" class="cell" data-execution_count="49">
+<div id="85a59b9f-f2ac-411c-a360-da5f162fa9f5" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:24:51.476250Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:24:51.475609Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:24:54.944337Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:24:54.943321Z&quot;}" data-papermill="{&quot;duration&quot;:3.477319,&quot;end_time&quot;:&quot;2024-03-26T20:24:54.945923&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:24:51.468604&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reorder rows and columns equal</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>row_order <span class="ot">&lt;-</span> <span class="fu">rownames</span>(recount_recon)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>col_order <span class="ot">&lt;-</span> <span class="fu">colnames</span>(recount_recon)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>recount_input_exprs <span class="ot">&lt;-</span> recount_input_exprs[row_order, col_order]</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate reconstruction error (per sample)</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>recon_error <span class="ot">&lt;-</span> <span class="fu">GetReconstructionMASE</span>(<span class="at">true.mat =</span> recount_input_exprs, </span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">recon.mat =</span> recount_recon)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># get number of LVs</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>num_lvs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(matrixB)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reorder rows and columns equal</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>row_order <span class="ot">&lt;-</span> <span class="fu">rownames</span>(recount_recon)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>col_order <span class="ot">&lt;-</span> <span class="fu">colnames</span>(recount_recon)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>recount_input_exprs <span class="ot">&lt;-</span> recount_input_exprs[row_order, col_order]</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate reconstruction error (per sample)</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>recon_error <span class="ot">&lt;-</span> <span class="fu">GetReconstructionMASE</span>(<span class="at">true.mat =</span> recount_input_exprs, </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">recon.mat =</span> recount_recon)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># get number of LVs</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>num_lvs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(matrixB)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="1d752b77-39f7-4df1-a72e-4e56e87c781c" class="cell" data-execution_count="51">
+<div id="1d752b77-39f7-4df1-a72e-4e56e87c781c" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:24:54.974716Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:24:54.974038Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:24:55.093592Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:24:55.092849Z&quot;}" data-papermill="{&quot;duration&quot;:0.130159,&quot;end_time&quot;:&quot;2024-03-26T20:24:55.094780&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:24:54.964621&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(recon_error), ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> recon_error)) <span class="sc">+</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample MASE"</span>,</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Input vs. PLIER reconstructed GTEx data"</span>,</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs)) <span class="sc">+</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">plot.title =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="spearman-correlation-input-reconstructed" class="level3">
-<h3 class="anchored" data-anchor-id="spearman-correlation-input-reconstructed">Spearman correlation (input, reconstructed)</h3>
-<p>If correlation between the input and the reconstructed data is high, that suggests that reconstruction is “successful.” Given the different constraints in PLIER, we would not expect to perfectly (rho = 1) reconstruct the input data. This particular evaluation will be most useful when we look at applying a trained PLIER model to a test dataset.</p>
-<div id="3b6d2556-7411-41bc-98d3-6dc34e220dd6" class="cell" data-execution_count="54">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate correlation </span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>recon_cor <span class="ot">&lt;-</span> <span class="fu">GetReconstructionCorrelation</span>(<span class="at">true.mat =</span> recount_input_exprs,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">recon.mat =</span> recount_recon)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(recon_cor), ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> recon_cor)) <span class="sc">+</span> </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample Spearman Correlation"</span>,</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Input vs. PLIER reconstructed GTEx data"</span>,</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs)) <span class="sc">+</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">plot.title =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(recon_error), ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> recon_error)) <span class="sc">+</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample MASE"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Input vs. PLIER reconstructed GTEx data"</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs)) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">plot.title =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -835,25 +1011,52 @@ TRUE
 </div>
 </div>
 </section>
-<section id="relationship-between-error-and-correlation" class="level3">
-<h3 class="anchored" data-anchor-id="relationship-between-error-and-correlation">Relationship between error and correlation</h3>
-<p>We expect that samples that are highly correlated pre- and post-PLIER should have low MASE.</p>
-<div id="f5db2806-70a3-422e-8037-5b6a781e4b92" class="cell" data-execution_count="53">
+<section id="spearman-correlation-input-reconstructed" class="level3">
+<h3 class="anchored" data-anchor-id="spearman-correlation-input-reconstructed">Spearman correlation (input, reconstructed)</h3>
+<p>If correlation between the input and the reconstructed data is high, that suggests that reconstruction is “successful.” Given the different constraints in PLIER, we would not expect to perfectly (rho = 1) reconstruct the input data. This particular evaluation will be most useful when we look at applying a trained PLIER model to a test dataset.</p>
+<div id="3b6d2556-7411-41bc-98d3-6dc34e220dd6" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:24:55.121078Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:24:55.120489Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:25:21.749541Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:25:21.748364Z&quot;}" data-papermill="{&quot;duration&quot;:26.636122,&quot;end_time&quot;:&quot;2024-03-26T20:25:21.750896&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:24:55.114774&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="20">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(recon_cor, recon_error)), </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> recon_cor,</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">y =</span> recon_error)) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Spearman Correlation"</span>,</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="st">"MASE"</span>,</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate correlation </span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>recon_cor <span class="ot">&lt;-</span> <span class="fu">GetReconstructionCorrelation</span>(<span class="at">true.mat =</span> recount_input_exprs,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">recon.mat =</span> recount_recon)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(recon_cor), ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> recon_cor)) <span class="sc">+</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample Spearman Correlation"</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Input vs. PLIER reconstructed GTEx data"</span>,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs)) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">plot.title =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="GTEx_PLIER_exploration_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="relationship-between-error-and-correlation" class="level3">
+<h3 class="anchored" data-anchor-id="relationship-between-error-and-correlation">Relationship between error and correlation</h3>
+<p>We expect that samples that are highly correlated pre- and post-PLIER should have low MASE.</p>
+<div id="f5db2806-70a3-422e-8037-5b6a781e4b92" class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2024-03-26T20:25:21.790374Z&quot;,&quot;iopub.status.busy&quot;:&quot;2024-03-26T20:25:21.789615Z&quot;,&quot;iopub.status.idle&quot;:&quot;2024-03-26T20:25:22.163236Z&quot;,&quot;shell.execute_reply&quot;:&quot;2024-03-26T20:25:22.162097Z&quot;}" data-papermill="{&quot;duration&quot;:0.381053,&quot;end_time&quot;:&quot;2024-03-26T20:25:22.164571&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2024-03-26T20:25:21.783518&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="21">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(recon_cor, recon_error)), </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> recon_cor,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">y =</span> recon_error)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Spearman Correlation"</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="st">"MASE"</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"All LVs, n ="</span>, num_lvs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTEx_PLIER_exploration_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>

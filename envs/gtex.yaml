@@ -40,4 +40,5 @@ dependencies:
   - papermill=2.3.*
   - pip:
       - jupyterlab-quarto
+      - itables
       
