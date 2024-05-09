@@ -43,12 +43,16 @@ rule All:
         # expand(f'{config.output}/gtex/plier_result_k{{parameter_k}}_frac{{frac}}.rds',
         #       parameter_k=[0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
         #      frac=[0.25, 0.5, 0.7, 1]),
-        f'{config.output}/pathways/chr21_pathway.rds',
+        #f'{config.output}/pathways/chr21_pathway.rds',
         #expand(f'{config.output}/gtex/robustness/gtex_plier_rob_{{replicate}}.rds', replicate=range(1, 11)),
         # Jupyter notebooks
-        "nbs/10_gtex/GTEx_PLIER_exploration.run.txt",
-        "nbs/10_gtex/GTEx_PLIER_robustness.run.txt",
-        "docs/index.html"
+        # "nbs/10_gtex/GTEx_PLIER_exploration.run.txt",
+        # "nbs/10_gtex/GTEx_PLIER_robustness.run.txt",
+        # "docs/index.html",
+        expand(f'{config.output}/gtex/plier_result_k{{parameter_k}}_frac{{frac}}/B.pkl',
+              parameter_k=[0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+             frac=[0.25, 0.5, 0.7, 1])
+
 
 
 # INSTALL DEPENDENCIES
@@ -132,6 +136,24 @@ rule gtex_plier_run:
         Rscript {input.script} {input.gtex_data_prep} {output.gtex_plier} {params.parameter_k} {params.frac}
         """
 
+rule plier_models_pickle:
+    """
+    Saves PLIER models as multiple Pickle files, one for each component of the model.
+    Each component is saved in a separate Pickle file within a directory that replaces
+    the '.rds' extension of the input file with a directory containing the Pickle files.
+    """
+    input:
+        script = "scripts/plier_to_pickle.R",
+        plier_result = f'{rules.gtex_plier_run.output.gtex_plier}'
+    output:
+        f'{config.output}/gtex/plier_result_k{{parameter_k}}_frac{{frac}}/B.pkl'
+    conda:
+        'envs/gtex.yaml'
+    shell:
+        """
+        Rscript {input.script} {input.plier_result}
+        """
+
 rule plier_gtex_robustness:
     """
     Processes GTEx gene expression data using PLIER for pathway analysis, including data Z-score normalization 10 times to assay the robustness of the results
@@ -193,6 +215,21 @@ rule render_website:
         quarto render
         """
 
+rule chr21_pathway:
+    """
+    Create matrix of chr21 for using as a prior knowledge in PLIER
+    """
+    input:
+        script = "scripts/create_pathway_chr.R",
+    output:
+        chr21_pathway = f'{config.output}/pathways/chr21_pathway.rds'
+    conda:
+        'envs/gtex.yaml',
+    shell:
+        """
+        Rscript {input.script} {output.chr21_pathway}
+        """
+
 # rule gtex_plier_run_pathways:
 #     """
 #     Processes GTEx gene expression data using PLIER with extra pathways.
@@ -212,17 +249,3 @@ rule render_website:
 #         Rscript {input.script} {input.gtex_data_prep} {output.gtex_plier} {params.parameter_k} {params.frac}
 #         """
 
-rule chr21_pathway:
-    """
-    Create matrix of chr21 for using as a prior knowledge in PLIER
-    """
-    input:
-        script = "scripts/create_pathway_chr.R",
-    output:
-        chr21_pathway = f'{config.output}/pathways/chr21_pathway.rds'
-    conda:
-        'envs/gtex.yaml',
-    shell:
-        """
-        Rscript {input.script} {output.chr21_pathway}
-        """

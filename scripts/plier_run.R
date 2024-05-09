@@ -19,6 +19,10 @@ output_file <- args[2]
 parameter_k <- as.numeric(args[3])
 frac <- as.numeric(args[4])
 
+plier_data_list_path <- 'output/gtex/gtex_plier_prep_chr21.rds'
+output_file <- 'output/gtex/plier_result_k1_frac0.7_chr21.rds'
+parameter_k <- 1
+frac <- 0.7
 
 # Load libraries
 `%>%` <- dplyr::`%>%`

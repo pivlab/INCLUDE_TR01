@@ -21,6 +21,7 @@ output_file <- args[2]
 `%>%` <- dplyr::`%>%`
 library(PLIER)
 library(dplyr)
+source(here::here('scripts/plier_util.R'))
 
 # Load PLIER pathway and cell type data
 expression_dataset_path <- here::here('output/gtex/GTEx_v8_gene_median_tpm.rds')
@@ -57,25 +58,12 @@ expression_matrix <- as.matrix(expression_dataset)
 
 # Combine the pathway data from PLIER
 all_paths <- PLIER::combinePaths(bloodCellMarkersIRISDMAP, svmMarkers, canonicalPathways,
-                                     immunePathways, oncogenicPathways, chr21_pathway)
+                                immunePathways, oncogenicPathways, chr21_pathway)
 
-# What genes are common to the pathway data and the expression matrix
-cm_genes <- PLIER::commonRows(all_paths, expression_matrix)
+output_combine_allPaths_expressionMatrix = combine_allPaths_expressionMatrix(expression_matrix, all_paths)
 
-# filter to common genes before row normalization to save on computation
-expression_matrix_cm <- expression_matrix[cm_genes, ]
-
-# Z-score normalization
-expression_matrix_cm <- PLIER::rowNorm(expression_matrix_cm) 
-
-# Remove NA
-expression_matrix_cm=na.omit(expression_matrix_cm)
-
-# What genes are common to the pathway data and the expression matrix
-cm_genes <- PLIER::commonRows(all_paths, expression_matrix_cm)
-
-# filter to common genes before row normalization to save on computation
-expression_matrix_cm <- expression_matrix_cm[cm_genes, ]
+expression_matrix_cm=output_combine_allPaths_expressionMatrix$expression_matrix
+all_paths_cm=output_combine_allPaths_expressionMatrix$all_paths
 
 # compute rsvd/svd
 set.seed(123456)
@@ -92,7 +80,7 @@ message("Done")
 # save z-scored expression data, the prior information matrix and svdres to be supplied to PLIER::PLIER and the number of PCs
 
 plier_data_list <- list("expression_matrix_cm" = expression_matrix_cm,
-                        "all_paths_cm" = all_paths[cm_genes, ],
+                        "all_paths_cm" = all_paths_cm,
                         "svdres" = svdres)
 
 saveRDS(plier_data_list, file = output_file)

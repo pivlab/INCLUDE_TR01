@@ -526,3 +526,85 @@ EvalWrapperWithHoldout <- function(plier.model, holdout.matrix,
               heldout.results = heldout.results))
   
 }
+
+combine_allPaths_expressionMatrix <- function(expression_matrix, all_paths) {
+  
+  # Find rows in expression_matrix that are not present in all_paths
+  missing_rows <- setdiff(unique(rownames(expression_matrix)), unique(rownames(all_paths)))
+  
+  # Create a data frame with zeros for missing rows
+  missing_rows_df <- data.frame(matrix(0, ncol = ncol(all_paths), nrow = length(missing_rows)))
+  rownames(missing_rows_df) <- missing_rows
+  colnames(missing_rows_df) <- colnames(all_paths)
+  
+  # Combine all_paths with missing rows data frame
+  all_paths <- rbind(all_paths, missing_rows_df)
+  
+  # Find rows in all_paths that are not present in expression_matrix
+  extra_rows <- setdiff(rownames(all_paths), rownames(expression_matrix))
+  
+  # Remove extra rows from all_paths
+  all_paths <- all_paths[!(rownames(all_paths) %in% extra_rows), ]
+  
+  # Find common rows between all_paths and expression_matrix
+  common_rows <- intersect(rownames(all_paths), rownames(expression_matrix))
+  
+  # Filter expression_matrix and all_paths to keep only common rows
+  expression_matrix <- expression_matrix[common_rows, ]
+  all_paths <- all_paths[common_rows, ]
+  
+  # Return both filtered matrices
+  return(list(expression_matrix = expression_matrix, all_paths = all_paths))
+}
+
+plier_to_pickle <- function(input_rds_plier_model, save_directory = NULL) {
+  # Function to convert a PLIER model in .rds format to multiple .pkl files
+  # Description:
+  # `plier_to_pickle` function converts a PLIER model (stored in a .rds file) to 
+  # a series of .pkl files using Python's pickle format.
+  #
+  # Parameters:
+  # - input_rds_plier_model: Path to the PLIER model in .rds format.
+  # - save_directory: Optional. Directory where the .pkl files will be stored. 
+  #                   If not provided, the directory is inferred from the .rds filename.
+  # Example usage:
+  # plier_to_pickle("data/gtex_tmp_1.rds")
+
+  save_as_pickle <- function(object, filename, save_directory) {
+    full_path <- file.path(save_directory, filename)
+    py_save_object(r_to_py(object), full_path)
+  }
+  
+  PLIER_model_to_pickle <- function(PLIER_model, save_directory) {
+    # Check if the directory exists; create it if it doesn't
+    if (!dir.exists(save_directory)) {
+      dir.create(save_directory, recursive = TRUE)
+    }
+
+    # Assuming PLIER_model is a list with various data types
+    names_list <- names(PLIER_model)
+
+    for (name in names_list) {
+      element <- PLIER_model[[name]]
+      if (is.matrix(element) || is.array(element)) {
+        # Convert matrices/arrays to data frames before saving
+        df <- as.data.frame(element)
+        save_as_pickle(df, paste0(name, ".pkl"), save_directory)
+      } else {
+        # Save other data types directly
+        save_as_pickle(element, paste0(name, ".pkl"), save_directory)
+      }
+    }
+  }
+  
+  # Resolve the path using here
+  input_rds_plier_model <- here::here(input_rds_plier_model)
+  PLIER_model <- readRDS(input_rds_plier_model)
+
+  # Derive save directory if not provided
+  if (is.null(save_directory)) {
+    save_directory <- gsub("\\.rds$", "", input_rds_plier_model)
+  }
+
+  PLIER_model_to_pickle(PLIER_model, save_directory)
+}

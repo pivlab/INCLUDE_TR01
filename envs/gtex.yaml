@@ -4,6 +4,7 @@ channels:
   - bioconda
 dependencies:
   - conda-forge::r-biocmanager
+  - scikit-learn
   - python=3.11.*
   - r-base==4.3.*
   - r-devtools==2.*  
@@ -16,6 +17,10 @@ dependencies:
   - r-compare
   - bioconductor-complexheatmap
   - bioconductor-qvalue
+  - bioconductor-TENxPBMCData
+  - bioconductor-DelayedMatrixStats
+  - bioconductor-BiocSingular
+  - bioconductor-oligo
   - r-here
   - r-dplyr
   - bioconductor-biomart
@@ -28,6 +33,7 @@ dependencies:
   - r-irkernel
   - r-assertthat
   - r-reshape2
+  - r-reticulate
   - jupyter
   - numpy
   - matplotlib
@@ -37,8 +43,20 @@ dependencies:
   - bioconductor-GenomicSuperSignature
   - r-magrittr
   - r-corrr
+  - bioconductor-edaseq
   - papermill=2.3.*
   - pip:
       - jupyterlab-quarto
       - itables
+      - pyreadr
+      - rpy2
+      - utils
+      - seaborn
+      - pyprojroot
+      - polars
+      - pyarrow
+      - ccc-coef
+      - pyprojroot
+
+
       
