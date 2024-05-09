@@ -557,54 +557,54 @@ combine_allPaths_expressionMatrix <- function(expression_matrix, all_paths) {
   return(list(expression_matrix = expression_matrix, all_paths = all_paths))
 }
 
-plier_to_pickle <- function(input_rds_plier_model, save_directory = NULL) {
-  # Function to convert a PLIER model in .rds format to multiple .pkl files
-  # Description:
-  # `plier_to_pickle` function converts a PLIER model (stored in a .rds file) to 
-  # a series of .pkl files using Python's pickle format.
-  #
-  # Parameters:
-  # - input_rds_plier_model: Path to the PLIER model in .rds format.
-  # - save_directory: Optional. Directory where the .pkl files will be stored. 
-  #                   If not provided, the directory is inferred from the .rds filename.
-  # Example usage:
-  # plier_to_pickle("data/gtex_tmp_1.rds")
+tpm_normalization = function(gene_counts) {
 
-  save_as_pickle <- function(object, filename, save_directory) {
-    full_path <- file.path(save_directory, filename)
-    py_save_object(r_to_py(object), full_path)
+  # Load biomaRt package
+  library(biomaRt)
+  
+  # Extract gene list from input
+  ensembl_list <- gene_counts$Geneid
+  
+  # Connect to Ensembl database and get human dataset
+  human <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+  
+  # Retrieve gene coordinates from Ensembl using gene IDs
+  gene_coords = getBM(attributes = c("hgnc_symbol", "ensembl_gene_id", "start_position", "end_position"), 
+                      filters = "ensembl_gene_id", values = ensembl_list, mart = human)
+  
+  # Calculate gene sizes (length) and keep only relevant columns
+  gene_coords$size = gene_coords$end_position - gene_coords$start_position
+  gene_coords = gene_coords[c('ensembl_gene_id', 'size')]
+  colnames(gene_coords) = c('Geneid', 'size')
+  
+  # Merge gene size data with the input gene counts
+  m_gene_counts = dplyr::left_join(gene_counts, gene_coords)
+  
+  # Remove duplicated gene symbols and set row names
+  m_gene_counts <- m_gene_counts[!duplicated(m_gene_counts["GeneSymbol"]), ]
+  rownames(m_gene_counts) = m_gene_counts$GeneSymbol
+  
+  # Remove rows with missing values
+  m_gene_counts = na.omit(m_gene_counts)
+  
+  # Subset to remove unnecessary columns for normalization
+  m_gene_counts_sub = subset(m_gene_counts, select = -c(Geneid, GeneSymbol, size))
+  
+  # Define TPM normalization function
+  tpm = function(counts, len) {
+    x <- counts / len
+    return(t(t(x) * 1e6 / colSums(x)))
   }
   
-  PLIER_model_to_pickle <- function(PLIER_model, save_directory) {
-    # Check if the directory exists; create it if it doesn't
-    if (!dir.exists(save_directory)) {
-      dir.create(save_directory, recursive = TRUE)
-    }
-
-    # Assuming PLIER_model is a list with various data types
-    names_list <- names(PLIER_model)
-
-    for (name in names_list) {
-      element <- PLIER_model[[name]]
-      if (is.matrix(element) || is.array(element)) {
-        # Convert matrices/arrays to data frames before saving
-        df <- as.data.frame(element)
-        save_as_pickle(df, paste0(name, ".pkl"), save_directory)
-      } else {
-        # Save other data types directly
-        save_as_pickle(element, paste0(name, ".pkl"), save_directory)
-      }
-    }
-  }
+  # Apply TPM normalization
+  gene_length = m_gene_counts$size
+  tpm_gene_counts = tpm(m_gene_counts_sub, gene_length)
   
-  # Resolve the path using here
-  input_rds_plier_model <- here::here(input_rds_plier_model)
-  PLIER_model <- readRDS(input_rds_plier_model)
+  # Convert results to data frame and then to matrix
+  tpm_gene_counts = data.frame(tpm_gene_counts)
+  tpm_gene_counts = as.matrix(tpm_gene_counts)
+  
+  # Return normalized counts
+  return(tpm_gene_counts)
 
-  # Derive save directory if not provided
-  if (is.null(save_directory)) {
-    save_directory <- gsub("\\.rds$", "", input_rds_plier_model)
-  }
-
-  PLIER_model_to_pickle(PLIER_model, save_directory)
 }
