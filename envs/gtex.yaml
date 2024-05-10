@@ -21,6 +21,7 @@ dependencies:
   - bioconductor-DelayedMatrixStats
   - bioconductor-BiocSingular
   - bioconductor-oligo
+  - bioconductor-deseq2
   - r-here
   - r-dplyr
   - bioconductor-biomart

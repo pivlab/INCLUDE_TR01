@@ -608,3 +608,30 @@ tpm_normalization = function(gene_counts) {
   return(tpm_gene_counts)
 
 }
+
+GetOrderedRowNormEM <- function(exprs.mat, plier.model) {
+
+    require(PLIER)
+    
+    # Z-score normalization
+    exprs.norm <- rowNorm(exprs.mat)
+    exprs.norm <- na.omit(exprs.norm)
+    
+    z.mat <- plier.model$Z
+    genes.in.model <- rownames(z.mat)
+    genes_in_exprs <- rownames(exprs.norm)
+    
+    # Find the common genes
+    common_genes <- intersect(genes_in_exprs, genes.in.model)
+    
+    # Filter the matrices based on the common genes
+    exprs.norm.filtered <- exprs.norm[common_genes, , drop = FALSE]
+    z.mat.filtered <- z.mat[common_genes, , drop = FALSE]
+        
+  # Update the plier.model with the new Z matrix
+  plier.model$Z <- z.mat.filtered
+
+  # Return the updated plier.model and the filtered exprs.norm
+  list(plier.model = plier.model, exprs.norm.filtered = exprs.norm.filtered)
+
+}
