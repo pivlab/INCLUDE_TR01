@@ -552,61 +552,57 @@ combine_allPaths_expressionMatrix <- function(expression_matrix, all_paths) {
   # Filter expression_matrix and all_paths to keep only common rows
   expression_matrix <- expression_matrix[common_rows, ]
   all_paths <- all_paths[common_rows, ]
+  all_paths <- as.matrix(all_paths)
   
   # Return both filtered matrices
   return(list(expression_matrix = expression_matrix, all_paths = all_paths))
 }
 
-tpm_normalization = function(gene_counts) {
-
-  # Load biomaRt package
-  library(biomaRt)
-  
-  # Extract gene list from input
-  ensembl_list <- gene_counts$Geneid
-  
-  # Connect to Ensembl database and get human dataset
-  human <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
-  
-  # Retrieve gene coordinates from Ensembl using gene IDs
-  gene_coords = getBM(attributes = c("hgnc_symbol", "ensembl_gene_id", "start_position", "end_position"), 
-                      filters = "ensembl_gene_id", values = ensembl_list, mart = human)
-  
-  # Calculate gene sizes (length) and keep only relevant columns
-  gene_coords$size = gene_coords$end_position - gene_coords$start_position
-  gene_coords = gene_coords[c('ensembl_gene_id', 'size')]
-  colnames(gene_coords) = c('Geneid', 'size')
-  
-  # Merge gene size data with the input gene counts
-  m_gene_counts = dplyr::left_join(gene_counts, gene_coords)
-  
-  # Remove duplicated gene symbols and set row names
-  m_gene_counts <- m_gene_counts[!duplicated(m_gene_counts["GeneSymbol"]), ]
-  rownames(m_gene_counts) = m_gene_counts$GeneSymbol
-  
-  # Remove rows with missing values
-  m_gene_counts = na.omit(m_gene_counts)
-  
-  # Subset to remove unnecessary columns for normalization
-  m_gene_counts_sub = subset(m_gene_counts, select = -c(Geneid, GeneSymbol, size))
-  
-  # Define TPM normalization function
-  tpm = function(counts, len) {
+tpm_normalization <- function(gene_counts, gtf_path) {
+    # Load the GTF file
+    gtf <- import(gtf_path)
+    
+    # Convert GRanges object to data frame
+    gtf_df <- as.data.frame(gtf)
+    
+    # Filter for gene features and calculate gene lengths
+    gene_lengths <- gtf_df %>%
+    dplyr::filter(type == "gene") %>%
+    dplyr::mutate(size = end - start) %>%
+    dplyr::distinct(gene_id, .keep_all = TRUE) %>%
+    dplyr::select(gene_id, size) %>% 
+    unique()
+    
+    colnames(gene_lengths) <-  c('GeneSymbol', 'size')
+    
+    # Merge gene size data with the input gene counts
+    m_gene_counts <- dplyr::left_join(gene_counts, gene_lengths)
+    
+    # Remove rows with missing values
+    m_gene_counts <- na.omit(m_gene_counts)
+    
+    # Define TPM normalization function
+    tpm <- function(counts, len) {
     x <- counts / len
-    return(t(t(x) * 1e6 / colSums(x)))
-  }
-  
-  # Apply TPM normalization
-  gene_length = m_gene_counts$size
-  tpm_gene_counts = tpm(m_gene_counts_sub, gene_length)
-  
-  # Convert results to data frame and then to matrix
-  tpm_gene_counts = data.frame(tpm_gene_counts)
-  tpm_gene_counts = as.matrix(tpm_gene_counts)
-  
-  # Return normalized counts
-  return(tpm_gene_counts)
-
+    scaled_x <- t(x) * 1e6 / colSums(x)
+    return(t(scaled_x))
+    }
+    
+    # Apply TPM normalization
+    
+    gene_length <- m_gene_counts$size
+    
+    matrix_counts <- m_gene_counts %>% dplyr::select(-Geneid, -GeneSymbol, -size) %>% as.matrix()
+    rownames(matrix_counts) <- m_gene_counts$GeneSymbol
+    
+    tpm_gene_counts <- tpm(matrix_counts, gene_length)
+    
+    # Convert results to data frame and then to matrix
+    tpm_gene_counts <- data.frame(tpm_gene_counts)
+    tpm_gene_counts <- as.matrix(tpm_gene_counts)
+    
+    # Return normalized counts
+    return(tpm_gene_counts)
 }
 
 GetOrderedRowNormEM <- function(exprs.mat, plier.model) {
