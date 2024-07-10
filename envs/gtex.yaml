@@ -22,9 +22,13 @@ dependencies:
   - bioconductor-BiocSingular
   - bioconductor-oligo
   - bioconductor-deseq2
+  - bioconductor-txdb.hsapiens.ucsc.hg38.knowngene
+  - bioconductor-ensdb.hsapiens.v75
+  - bioconductor-recount3
+  - bioconductor-recount
   - r-here
   - r-dplyr
-  - bioconductor-biomart
+  - bioconda::bioconductor-biomart
   - r-tidyr
   - r-UpSetR
   - jupyterlab
@@ -42,10 +46,12 @@ dependencies:
   - bioconductor-clusterprofiler
   - bioconductor-org.hs.eg.db
   - bioconductor-GenomicSuperSignature
+  - bioconductor-enrichmentbrowser==2.32.0
   - r-magrittr
   - r-corrr
   - bioconductor-edaseq
   - papermill=2.3.*
+  - bioconductor-tximport
   - pip:
       - jupyterlab-quarto
       - itables
@@ -58,6 +64,7 @@ dependencies:
       - pyarrow
       - ccc-coef
       - pyprojroot
+      - statsmodels
 
 
       

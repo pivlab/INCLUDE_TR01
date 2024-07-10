@@ -560,7 +560,7 @@ combine_allPaths_expressionMatrix <- function(expression_matrix, all_paths) {
 
 tpm_normalization <- function(gene_counts, gtf_path) {
     # Load the GTF file
-    gtf <- import(gtf_path)
+    gtf <- rtracklayer::import(gtf_path)
     
     # Convert GRanges object to data frame
     gtf_df <- as.data.frame(gtf)
