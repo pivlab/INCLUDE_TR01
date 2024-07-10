@@ -23,7 +23,7 @@ Workflow can be executed by:
 `-j` defines the number of cores or jobs to be used in parallel processing. For example, `make -j 1` would use 1 core.
 
 ``` bash
-snakemake --use-conda --snakefile plier_recount3.smk -j 1
+snakemake --use-conda --snakefile include_tr01.smk -j 1
 ```
 
 ## Datasets
